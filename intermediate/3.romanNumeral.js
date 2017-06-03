@@ -79,4 +79,4 @@ function convertToRoman(num) {
  return arr.join('');
 }
 
-convertToRoman(3999);
+console.log(convertToRoman(3999));

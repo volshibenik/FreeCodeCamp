@@ -113,7 +113,7 @@ P.S. Обратите внимание, ведущие нули должны п�
     
     <script>
         var d = new Date(2014, 0, 30);
-        function formatDate(date) {
+        function formatDate3(date) {
             var arr = [];
             arr.push(date.getDate());
             arr.push(date.getMonth()+1);
@@ -126,7 +126,7 @@ P.S. Обратите внимание, ведущие нули должны п�
             });
             return arr.join('.');
         }
-        console.log(formatDate(d));
+        console.log(formatDate3(d));
     </script>
     
    <!-- Напишите функцию formatDate(date), которая форматирует дату date так:
@@ -136,14 +136,20 @@ P.S. Обратите внимание, ведущие нули должны п�
 Иначе если прошло меньше часа, то "m мин. назад".
 Иначе полная дата в формате "дд.мм.гг чч:мм".-->
     <script>
+        var dat = new Date(2017, 0, 21, 5, 8);
         function formatDate(date) {
+            
             if ((new Date() - date) < 1000) return "только что";
             else if ((new Date() - date) < 60000) return (new Date() - date)/1000 + " сек. назад";
             else if ((new Date() - date) < 60000*60) return (new Date() - date)/60000 + " мин. назад";
             else 
-
-           
+                var h = date.getHours().toString();
+                if (h.length == 1) h = "0"+h;
+                var m =date.getMinutes().toString();
+                if (m.length == 1) m = "0"+m;
+                return formatDate3(date) + " " + h+":"+m;
         }
+        console.log(formatDate(dat));
     </script>
     
     
