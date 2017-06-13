@@ -38,7 +38,7 @@ nav {
 }
 .bio {
   background: radial-gradient(circle at 50% 59%, #dddddd 3%, #333333 4%, #333333 11%, rgba(54, 78, 39, 0) 12%, rgba(54, 78, 39, 0)) 0 90px, radial-gradient(circle at 50% 41%, #333333 3%, #dddddd 4%, #dddddd 11%, rgba(210, 202, 171, 0) 12%, rgba(210, 202, 171, 0)) 0 90px, radial-gradient(circle at 100% 50%, #dddddd 16%, rgba(210, 202, 171, 0) 17%) 100px 90px, radial-gradient(circle at 0% 50%, #333333 16%, rgba(54, 78, 39, 0) 17%) 100px 90px;
-  background-color: mediumpurple;
+  background-color: #949;
   background-size: 200px 200px;
   padding-top: 50px;
 }
@@ -56,6 +56,13 @@ nav {
   color: darkgreen;
   transform: rotate(360deg);
 }
+.works {
+  background: url(../img/purp.jpg);
+  background-size: cover;
+  padding-bottom: 70px;
+  color: #ddd;
+  border-top: 8px solid rgba(0, 0, 0, 0.5);
+}
 .works-item {
   height: 600px;
   overflow-y: scroll;
@@ -65,7 +72,6 @@ nav {
 }
 .main-footer {
   background-color: #eee;
-  margin-top: 70px;
   padding-bottom: 30px;
 }
 .social-list li {
