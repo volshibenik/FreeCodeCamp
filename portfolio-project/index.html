@@ -2,8 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Portfolio page</title>
+    <link rel="stylesheet" href="css/font-awesome.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Shadows+Into+Light+Two" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -36,18 +38,18 @@
 			 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 			 
 				 <ul class="nav navbar-nav navbar-right">
-					 <li class="active"><a href="#">About</a></li>
-					 <li><a href="#">Works</a></li>
-					 <li class="dropdown"><!--do i need dropdown???-->
+					 <li class="active"><a href="#works-id">Works</a></li>
+					 <li><a href="#contacts-id">Contacts</a></li>
+					 <!--<li class="dropdown"> // don't need it yet
 						 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
 						 <ul class="dropdown-menu">
 							 <li><a href="#">Action</a></li>
-							 <li><a href="#">Another action</a></li>
+							 
 							 <li><a href="#">Something else here</a></li>
 							 <li role="separator" class="divider"></li>
 							 <li><a href="#">Separated link</a></li>
 						 </ul>
-					 </li>
+					 </li>-->
 				 </ul>
 			 </div><!-- /.navbar-collapse -->
 		 </div><!-- /.container -->
@@ -62,7 +64,7 @@
 		</p>
 	</div>
 </section>
-<section class="works">
+<section class="works" id="works-id">
 	<div class="container">
 		<h2 class="title">My works</h2>
 		<p class="section-desc">Well, not much to show here yet, just a bunch of PSDs i transformed to HTML/CSS</p>
@@ -108,14 +110,16 @@
 	</div>
 </section>
 
-<footer class="main-footer contacts">
+<footer class="main-footer contacts" id="contacts-id">
 	<div class="container">
 		<h2 class="title">Contacts</h2>
-		<ul class="social-list">
-			<li><a href=""><i class="fa fa-"></i></a></li>
+		<ul class="social-list col-xs-8">
+			<li><a href="https://twitter.com/volshibenik"><i class="fa fa-twitter"></i></a></li>
+			<li><a href="https://github.com/volshibenik"><i class="fa fa-github"></i></a></li>
+			<li><a href="https://www.linkedin.com/in/sergey-saevich-9a1389144/"><i class="fa fa-linkedin"></i></a></li>
 		</ul>
 		
-		<span class="copyright">&copy;volshibenik, 2017</span>
+		<div class="copyright col-xs-4">&copy;volshibenik, 2017</div>
 	</div>
 </footer>
 <section class="aa"></section>

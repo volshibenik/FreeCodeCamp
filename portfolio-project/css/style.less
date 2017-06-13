@@ -2,8 +2,31 @@
 .container {
 }
 * {
-  box-sizing: border-box;
-	
+  box-sizing: border-box;   
+	font-family: cursive;
+	font-size: 16px;
+}
+li {
+	list-style: none;
+}
+.main-title {
+	text-align: center;
+	font-size: 45px;
+	letter-spacing: 3px;
+	font-weight: bold;
+	padding: 20px;
+	color: #eee;
+	margin-bottom: 100px;
+}
+.title {
+	text-align: center;
+	font-size: 35px;
+	font-family: 'Shadows Into Light Two', cursive;
+	margin: 50px auto;
+}
+.section-desc {
+	text-align: center;
+	padding-bottom: 40px;
 }
 .main-header {
   background-color: #ddd;
@@ -12,24 +35,70 @@
 }
 .logo {
   display: block;
-  height: 60px;
+  height: 50px;
 }
 nav {
-  height: 60px;
-}
-
-.aa {
-	height: 2000px;
-	border-bottom: 20px solid black;
+  height: 50px;
 }
 .bio {
-	padding-top: 80px;
+	background: 
+		radial-gradient(circle at 50% 59%, #ddd 3%, #333 4%, #333 11%, rgba(54,78,39,0) 12%, rgba(54,78,39,0)) 0 90px,
+		radial-gradient(circle at 50% 41%, #333 3%, #ddd 4%, #ddd 11%, rgba(210,202,171,0) 12%, rgba(210,202,171,0)) 0 90px,
+		radial-gradient(circle at 100% 50%, #ddd 16%, rgba(210,202,171,0) 17%) 100px 90px,
+		radial-gradient(circle at 0% 50%, #333 16%, rgba(54,78,39,0) 17%) 100px 90px;
+		background-color:mediumpurple;
+		background-size:200px 200px;
+		padding-top: 50px;
+	.section-desc {
+		color: #eee;
+		a {
+			color: #444;
+			text-decoration: none;
+			transition: 1s;
+			display: inline-block;
+			padding: 20px 5px;
+			&:hover {
+				color: darkgreen;
+				transform: rotate(360deg);
+			}
+		}
+	}
 }
+
+
 .works-item {
 	height: 600px;
 	overflow-y: scroll;
 	
 	img {
 		max-width: 100%;
+	}
+}
+.main-footer {
+	background-color: #eee;
+	margin-top: 70px;
+	padding-bottom: 30px;
+}
+.social-list {
+	li {
+		display: inline-block;
+		a {
+			padding: 10px 20px;
+			font-size: 20px;
+			
+			i {
+				color: #bbb;
+				transition: .3s;
+			}
+		}
+		&:hover .fa-twitter {
+			color: #4099ff;
+		}
+		&:hover .fa-github {
+			color: #000;
+		}
+		&:hover .fa-linkedin {
+			color: #007bb6;
+		}
 	}
 }
