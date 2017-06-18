@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>RandomQuoteMachine</title>
+</head>
+<body>
+	<button class="click-me" onclick="kkk()">cli</button>
+	<div id="quote"></div>
+	<a class="twitter-share-button"
+  href="https://twitter.com/intent/tweet">
+Tweet</a>
+	
+	<script>
+		function kkk() {
+			var x = Math.floor(Math.random() * 6);
+		
+		var quote = document.getElementById('quote');
+		switch(x) {
+			case 1:
+				quote.innerHTML = "I don't even believe myself when i say i'll be ready in 5 minutes"; break;
+			case 2:
+				quote.innerHTML = "Never trust someone who takes hours to text you back, but when you hang out with them they check their phone every minute."; break;
+			case 3:
+				quote.innerHTML = "Blah"; break;
+			case 4:
+				quote.innerHTML = "The closest a person ever comes to perfection is when he fills out a job application form."; break;
+			case 5:
+				quote.innerHTML = "Hate to break it to you, Facebook, but the entire Internet is already a Dislike button."; break;
+			default:
+				quote.innerHTML = "I love juice!"; break;
+						}
+		}
+		
+		
+	</script>
+	
+	
+	<script>window.twttr = (function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0],
+    t = window.twttr || {};
+  if (d.getElementById(id)) return t;
+  js = d.createElement(s);
+  js.id = id;
+  js.src = "https://platform.twitter.com/widgets.js";
+  fjs.parentNode.insertBefore(js, fjs);
+
+  t._e = [];
+  t.ready = function(f) {
+    t._e.push(f);
+  };
+
+  return t;
+}(document, "script", "twitter-wjs"));</script>
+</body>
+</html>

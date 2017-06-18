@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+<div class="a" id="demo"></div>
+	<script>
+		window.onload = function() {
+			var x = Math.round(Math.random()*2);
+			var d = document.getElementById("demo").innerHTML = "Paragraph changed!";
+		
+		switch(x) {
+			case 1: d = document.getElementById("demo").innerHTML = "Paragraph changsasasaased!";;break;
+			default: d = document.getElementById("demo").innerHTML = "Paragraph changed!!!!!!!!!!";;break;
+						}
+			
+		}
+			
+	</script>
+</body>
+</html>
