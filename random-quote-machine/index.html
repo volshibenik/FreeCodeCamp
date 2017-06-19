@@ -4,6 +4,10 @@
 	<meta charset="UTF-8">
 	<title>RandomQuoteMachine</title>
 	<link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
+	<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
 	<script src="https://platform.twitter.com/widgets.js"></script>
 	<style>
 		body {
@@ -45,18 +49,22 @@
 	</style>
 </head>
 <body>
-	
+
 	<h1 class="title">Volshibenik's quote machine</h1>
 	<button class="click-me" onclick="makeQuote()">click me!</button>
-	<div id="quote">afsffsa</div>
-<!--	<a rel="me" class="twitter-share-button"
-		 href="https://twitter.com/intent/tweet?text=Hellsasao%20world&url=''">
+	<div id="quote"></div>
+	<a href="#" id="ak" ></a>
+	<!--<a  class="twitter-share-button"
+		 href="https://twitter.com/intent/tweet" data-text="REPLACEME">
 Tweet</a>-->
 <div id="container"></div>
 	
+	
 	<script>
 		var x = 0;
+		
 		function makeQuote() {
+
 			var old_x = x;
 			x = Math.floor(Math.random() * 8);
 			if (old_x === x) x = Math.floor(Math.random() * 6); // not fully random now, but much more beautiful almost w/o repeats
@@ -83,13 +91,20 @@ Tweet</a>-->
 				quote.innerHTML = "Chocolate doesn't ask silly questions. Chocolate understands."; break;
 				
 						}
+			
+				// http://jsfiddle.net/chris27/DQw5b/4/ 
+			var tweetBtn = $('<a></a>')
+        .addClass('twitter-share-button')
+        .attr('href', 'http://twitter.com/share')
+        .attr('data-url', '')
+        .attr('data-text', $('#quote').html());
+    		$('#ak').append(tweetBtn);
+				twttr.widgets.load();
+			
+			
 		}
 		
-		
 	</script>
-	
-	
-	
 
 	
 	<!--<script>window.twttr = (function(d, s, id) {
@@ -108,7 +123,9 @@ Tweet</a>-->
 
   return t;
 }(document, "script", "twitter-wjs"));</script>-->
-	<script>
+
+
+	<!--<script>
 		twttr.widgets.createShareButton(
 			'/',
 			document.getElementById('container'),
@@ -117,7 +134,7 @@ Tweet</a>-->
 			}
 		);
 	</script>
-
+-->
 
 
 
