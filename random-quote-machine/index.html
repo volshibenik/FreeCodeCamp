@@ -3,17 +3,63 @@
 <head>
 	<meta charset="UTF-8">
 	<title>RandomQuoteMachine</title>
+	<link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
+	<script src="https://platform.twitter.com/widgets.js"></script>
+	<style>
+		body {
+			max-width: 1170px;
+			margin: 0 auto;
+			text-align: center;
+			background-color: #cc9;
+		}
+		.title {
+			font-family: 'Rock Salt', cursive;
+
+		}
+		.click-me {
+			padding: 15px 30px;
+			margin: 10px 0 40px 0;
+			border-radius: 7px;
+			outline: 0;
+			font-size: 22px;
+			text-transform: uppercase;
+			color: #eee;
+			background-color: coral;
+			transition: .4s;
+		}
+		.click-me:hover {
+			color: coral;
+			background-color: #fff;
+			text-shadow: 1px 1px 30px coral;
+		}
+		#quote {
+			font-family: cursive, sans-serif;
+			margin: 0 auto;
+			width: 500px;
+			height: auto;
+			padding: 30px;
+			border: 7px solid #444;
+			border-radius: 25px;
+			box-shadow: 2px 3px 9px 1px rgba(0,0,0,.3);
+		}
+	</style>
 </head>
 <body>
-	<button class="click-me" onclick="kkk()">cli</button>
-	<div id="quote"></div>
-	<a class="twitter-share-button"
-  href="https://twitter.com/intent/tweet">
-Tweet</a>
+	
+	<h1 class="title">Volshibenik's quote machine</h1>
+	<button class="click-me" onclick="makeQuote()">click me!</button>
+	<div id="quote">afsffsa</div>
+<!--	<a rel="me" class="twitter-share-button"
+		 href="https://twitter.com/intent/tweet?text=Hellsasao%20world&url=''">
+Tweet</a>-->
+<div id="container"></div>
 	
 	<script>
-		function kkk() {
-			var x = Math.floor(Math.random() * 6);
+		var x = 0;
+		function makeQuote() {
+			var old_x = x;
+			x = Math.floor(Math.random() * 8);
+			if (old_x === x) x = Math.floor(Math.random() * 6); // not fully random now, but much more beautiful almost w/o repeats
 		
 		var quote = document.getElementById('quote');
 		switch(x) {
@@ -22,13 +68,19 @@ Tweet</a>
 			case 2:
 				quote.innerHTML = "Never trust someone who takes hours to text you back, but when you hang out with them they check their phone every minute."; break;
 			case 3:
-				quote.innerHTML = "Blah"; break;
+				quote.innerHTML = "Don't give up on your dreams. Keep sleeping."; break;
 			case 4:
 				quote.innerHTML = "The closest a person ever comes to perfection is when he fills out a job application form."; break;
 			case 5:
 				quote.innerHTML = "Hate to break it to you, Facebook, but the entire Internet is already a Dislike button."; break;
+			case 6:
+				quote.innerHTML = "My level of sarcasm has gotten to the point where i don't even know if i'm kidding or not."; break;
 			default:
-				quote.innerHTML = "I love juice!"; break;
+				quote.innerHTML = "I stopped understanding math when alphabet decided to get involved"; break;
+			case 7:
+				quote.innerHTML = "Life is not a fairytale. If you lose your shoe at midnight, you're drunk."; break;
+			case 8:
+				quote.innerHTML = "Chocolate doesn't ask silly questions. Chocolate understands."; break;
 						}
 		}
 		
@@ -36,7 +88,10 @@ Tweet</a>
 	</script>
 	
 	
-	<script>window.twttr = (function(d, s, id) {
+	
+
+	
+	<!--<script>window.twttr = (function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0],
     t = window.twttr || {};
   if (d.getElementById(id)) return t;
@@ -51,6 +106,22 @@ Tweet</a>
   };
 
   return t;
-}(document, "script", "twitter-wjs"));</script>
+}(document, "script", "twitter-wjs"));</script>-->
+	<script>
+		twttr.widgets.createShareButton(
+			'/',
+			document.getElementById('container'),
+			{
+				text: document.getElementById('quote').innerHTML
+			}
+		);
+	</script>
+
+
+
+
+
+
+
 </body>
 </html>
