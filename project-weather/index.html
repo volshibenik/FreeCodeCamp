@@ -12,59 +12,70 @@
 	<script>
 		
 		function gettingJSON(){
-			var jsonStr = '';
+			var jsonStr = "https://api.darksky.net/forecast/", 
+					ke = ["e","1","7","f","6","8","c","6","c","b","b","e","1","0","c","0","1","6","e","2","a","f","d","d","1","4","d","0","2","5","5","a"], 
+					exclude = "exclude=minutely,hourly,daily,alerts,flags",
+					units = "units=ca"
+					;
+			
 			var arr = [];
-				navigator.geolocation.getCurrentPosition(function(position) {
- 					var lat = position.coords.latitude;
-					var lon = position.coords.longitude;
-				arr.push(lat);
-			arr.push(lon);
-});
-				console.log(arr);
-			$.getJSON("https://api.darksky.net/forecast/e17f68c6cbbe10c016e2afdd14d0255a/37.8267,-32.4233?exclude=minutely,hourly,daily,alerts,flags&callback=?", function(json) {
-			alert(json)
-/*function success(pos) {
-  var crd = pos.coords;
-	lat = pos.coords.latitude;
-	lon = pos.coords.longitude;
-  console.log('Your current position is:');
-  
-  console.log(`More or less ${crd.accuracy} meters.`);
-};
-
-function error(err) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
-};
-
-console.log(navigator.geolocation.getCurrentPosition(success, error));*/	
+			
+			var ob = {"latitude":53.904539799999995,"longitude":27.5615244,"timezone":"Europe/Minsk","offset":3,"currently":{"time":1498221086,"summary":"Mostly Cloudy","icon":"partly-cloudy-day","precipIntensity":0.0035,"precipProbability":0.02,"precipType":"rain","temperature":66.37,"apparentTemperature":65.33,"dewPoint":52.79,"humidity":0.62,"windSpeed":4.67,"windGust":4.49,"windBearing":267,"cloudCover":0.83,"pressure":1005.23,"ozone":355.28,"uvIndex":3}}
+			
+			function makeJSON (lat, lon) {
 				
-		
+				jsonStr +=ke.join('') + "/" + lat + "," + lon + "?" + exclude + "&" +units + "&" + "callback=?";
+				
+				$.getJSON(jsonStr, function(json) {
+					$('.disp').html(json.timezone + '<br>' + json['currently']['temperature'] + ' C');
+				});		
+				console.log(jsonStr);
+				
+			}
+			
+			//    https://developer.mozilla.org/en/docs/Learn/JavaScript/Objects/JSON
+			
+			
+			/*function download(text, name, type) {
+				var a = document.createElement("a");
+				var file = new Blob([text], {type: type});
+				a.href = URL.createObjectURL(file);
+				a.download = name;
+				a.click();
+			}
+			download(te, 'test.txt', 'text/plain');*/
+			
+			
+			
+			var options = {
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 20
+			};
 
+			function success(pos) {
+				var crd = pos.coords;
+				console.log(`More or less ${crd.accuracy} meters.`);
+				
+				var lat = pos.coords.latitude;
+				var lon = pos.coords.longitude;
+				
+				makeJSON(lat,lon);
+			};
 
-			
-				/*var dataObj = JSON.stringify(json);
-				for (var k in dataObj)
-				console.log(k, dataObj[k]);*/
-				
-				
-			});
+			function error(err) {
+				console.warn(`ERROR(${err.code}): ${err.message}`);
+			};
 			
 			
-		/*var ourRequest = new XMLHttpRequest();
-			ourRequest.open('GET', 'https://api.darksky.net/forecast/e17f68c6cbbe10c016e2afdd14d0255a/37.8267,-122.4233?callback=?');
-			
-			ourRequest.onload = function() {
-				
-				if (ourRequest.status >= 200 && ourRequest.status < 400) {
-					var ourData = JSON.parse(ourRequest.responseText);
-					renderHTML(ourData);
-				//	$('.disp').html(ourData);
-				} else {
-					console.log("We connected to the server, but it returned an error.");
-				}
-			}*/
-			
+			navigator.geolocation.getCurrentPosition(success, error, options);
+										
 		};
+		
+		
+		
+		
+		
 	//	https://stackoverflow.com/questions/3076414/ways-to-circumvent-the-same-origin-policy
 	</script>
 	<!--aeris weather   
