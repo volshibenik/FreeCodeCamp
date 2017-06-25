@@ -7,10 +7,10 @@
 </head>
 <body>
 
-	<button onclick="gettingJSON()">aa</button>
+	<button onclick="gettingJSON()">get T</button>
 	<p class="disp"></p>
+	
 	<script>
-		
 		function gettingJSON(){
 			var jsonStr = "https://api.darksky.net/forecast/", 
 					ke = ["e","1","7","f","6","8","c","6","c","b","b","e","1","0","c","0","1","6","e","2","a","f","d","d","1","4","d","0","2","5","5","a"], 
@@ -27,7 +27,9 @@
 				jsonStr +=ke.join('') + "/" + lat + "," + lon + "?" + exclude + "&" +units + "&" + "callback=?";
 				
 				$.getJSON(jsonStr, function(json) {
-					$('.disp').html(json.timezone + '<br>' + json['currently']['temperature'] + ' C');
+					var cur = json['currently'];
+					var time = cur['time'];
+					$('.disp').html(json.timezone + '<br>' + cur['temperature'] + ' C' +  '<br>' +time/(60*60*24*365) );
 				});		
 				console.log(jsonStr);
 				
@@ -73,16 +75,15 @@
 		};
 		
 		
-		
-		
-		
-	//	https://stackoverflow.com/questions/3076414/ways-to-circumvent-the-same-origin-policy
+	
+	
 	</script>
 	<!--aeris weather   
 login 
 ZHDYPPNKuXJNHuVVuQfFA
 Secret Key
 qcyFeaGRbwtbnrh5HS6sBzOPtTNkvIw2xAP8zAYf
+https://stackoverflow.com/questions/3076414/ways-to-circumvent-the-same-origin-policy
 	-->
 
 </body>
