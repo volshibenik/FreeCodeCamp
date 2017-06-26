@@ -5,21 +5,36 @@
 	<title>Document</title>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 	<script src="skycons-master/skycons.js"></script>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 	<canvas id="icon1" width="128" height="128"></canvas>
 	<canvas id="icon2" width="128" height="128"></canvas>
-	<button onclick="gettingJSON()">get T</button>
+	<button class="btn-main" onclick="gettingJSON()">get T</button>
+	<input type="button" class="btn-switch-temp" onclick="switchTemp(this)" value="Show in Fahrenheit">
 	<p class="disp"></p>
 	
 	<script>
+		//variables
 		var jsonStr = "https://api.darksky.net/forecast/", 
 				ke = ["e","1","7","f","6","8","c","6","c","b","b","e","1","0","c","0","1","6","e","2","a","f","d","d","1","4","d","0","2","5","5","a"], 
 				exclude = "exclude=minutely,hourly,alerts,flags",
 				units = "units=ca"
 		;
-		var skycons = new Skycons();
+		
+		var skycons = new Skycons({"color" : "white"});
 
+		function switchTemp (el) {
+			if (el.value === 'Show in Celsius') {
+				el.value = "Show in Fahrenheit";
+			} 
+			else {
+				el.value = 'Show in Celsius';
+			}
+		}
+		
+		
+		
 		
 		function timeConverter(UNIX_timestamp){
 			var a = new Date(UNIX_timestamp * 1000);
@@ -92,7 +107,7 @@
 
 				
 				$('.disp').html(json.timezone + '<br>' + cur['temperature'] + ' C' +  '<br>' + formattedTime );
-				
+				skycons.play();
 			});
 			
 			
