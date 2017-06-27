@@ -9,33 +9,42 @@
 </head>
 <body>
 	<canvas id="icon1" width="128" height="128"></canvas>
-	<canvas id="icon2" width="128" height="128"></canvas>
-	<button class="btn-main" onclick="gettingJSON()">get T</button>
+	<input type="button" class="btn-main" onclick="gettingJSON()" value="Get weather">
 	<input type="button" class="btn-switch-temp" onclick="switchTemp(this)" value="Show in Fahrenheit">
+	<!--here goes display -->
+	<section class="display">
+		<div class="disp-icon"></div>
+		<div class="disp-region"></div>
+		<div class="disp-temp"></div>
+		<div class="disp-date"></div>
+	</section>
 	<p class="disp"></p>
 	
 	<script>
-		//variables
+		//constants
 		var jsonStr = "https://api.darksky.net/forecast/", 
 				ke = ["e","1","7","f","6","8","c","6","c","b","b","e","1","0","c","0","1","6","e","2","a","f","d","d","1","4","d","0","2","5","5","a"], 
-				exclude = "exclude=minutely,hourly,alerts,flags",
-				units = "units=ca"
-		;
+		//variables
+				exclude = "exclude=minutely,hourly,daily,alerts,flags",
+				units = "units=ca";
 		
+		//init skycons icon pack
 		var skycons = new Skycons({"color" : "white"});
-
+		
+		//switch between celsius and fahrenheit
 		function switchTemp (el) {
+			var t = +(($('.disp-temp').html()).slice(0,-2));
 			if (el.value === 'Show in Celsius') {
 				el.value = "Show in Fahrenheit";
+				$('.disp-temp').html( Math.round((t-32)*10/1.8)/10 + ' &#8451;');
 			} 
 			else {
 				el.value = 'Show in Celsius';
+				$('.disp-temp').html( Math.round((t*1.8+32)*10)/10 + ' &#8457;');
 			}
 		}
 		
-		
-		
-		
+		//convert unix time from API to date
 		function timeConverter(UNIX_timestamp){
 			var a = new Date(UNIX_timestamp * 1000);
 			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -48,30 +57,31 @@
 			return time;
 		}
 		
+		//locate coords if user allows and invoke makeJSON()
 		function gettingJSON(){
 
 			var options = {
 				enableHighAccuracy: true,
 				timeout: 5000,
 				maximumAge: 0
-			};
-
+			}
+			
 			function success(pos) {
 				var lat = pos.coords.latitude;
 				var lon = pos.coords.longitude;
 
 				makeJSON(lat,lon);
-			};
-
+			}
+			
 			function error(err) {
 				console.warn(`ERROR(${err.code}): ${err.message}`);
-			};
+			}
 
 			navigator.geolocation.getCurrentPosition(success, error, options);		
 			
 		}
 			
-			
+		// concatenate json string and invoke makeThings()
 		function makeJSON (lat, lon) {
 			
 			jsonStr +=ke.join('') + "/" + lat + "," + lon + "?" + exclude + "&" +units + "&" + "callback=?";
@@ -89,24 +99,20 @@
 			console.log(jsonStr);
 		}
 			
+		//get json 
 		function makeThings(jsonUrl) {	
 			
 			$.getJSON(jsonUrl, function(json) {
 				
-				
 				var cur = json['currently'];
-				var time = cur['time'];
-				//var hourly = json['hourly']['data'];
-			//	var time =hourly[47]['time'];
-				var formattedTime = timeConverter(time);
+				var temperature = Math.round(cur['temperature']*10)/10;
 				
-				var icon = cur['icon'];
+				skycons.add("icon1", cur['icon']);
 				
-				skycons.add("icon1", icon);
-				skycons.add(document.getElementById("icon2"), icon);
-
+				$('.disp-region').html(json.timezone);
+				$('.disp-temp').html(temperature + ' &#8451;');
+				$('.disp-date').html(timeConverter(cur['time']));
 				
-				$('.disp').html(json.timezone + '<br>' + cur['temperature'] + ' C' +  '<br>' + formattedTime );
 				skycons.play();
 			});
 			
