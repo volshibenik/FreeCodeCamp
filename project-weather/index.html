@@ -8,29 +8,39 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<canvas id="icon1" width="128" height="128"></canvas>
-	<input type="button" class="btn-main" onclick="gettingJSON()" value="Get weather">
-	<input type="button" class="btn-switch-temp" onclick="switchTemp(this)" value="Show in Fahrenheit">
-	<!--here goes display -->
-	<section class="display">
-		<div class="disp-icon"></div>
-		<div class="disp-region"></div>
-		<div class="disp-temp"></div>
-		<div class="disp-date"></div>
-	</section>
-	<p class="disp"></p>
+
+	<main class="weather-app">
+		<!--here goes display -->
+		<section class="display">
+			<div class="disp-icon">
+				<canvas id="icon1" width="128" height="128"></canvas>
+			</div>
+			<div class="disp-unit disp-region"></div>
+			<div class="disp-unit disp-temp"></div>
+			<div class="disp-unit disp-date"></div>
+		</section>
+
+		<!--controls-->
+		<div class="controls">
+			<input type="button" class="btn-main" onclick="gettingJSON()" value="Get weather">
+			<input type="button" class="btn-switch-temp" onclick="switchTemp(this)" value="Show in Fahrenheit">
+		</div>
+
+	</main>
+
+
 	
 	<script>
 		//constants
 		var jsonStr = "https://api.darksky.net/forecast/", 
 				ke = ["e","1","7","f","6","8","c","6","c","b","b","e","1","0","c","0","1","6","e","2","a","f","d","d","1","4","d","0","2","5","5","a"], 
-		//variables
+				//variables
 				exclude = "exclude=minutely,hourly,daily,alerts,flags",
 				units = "units=ca";
-		
+
 		//init skycons icon pack
 		var skycons = new Skycons({"color" : "white"});
-		
+
 		//switch between celsius and fahrenheit
 		function switchTemp (el) {
 			var t = +(($('.disp-temp').html()).slice(0,-2));
@@ -43,58 +53,55 @@
 				$('.disp-temp').html( Math.round((t*1.8+32)*10)/10 + ' &#8457;');
 			}
 		}
-		
+
 		//convert unix time from API to date
 		function timeConverter(UNIX_timestamp){
-			var a = new Date(UNIX_timestamp * 1000);
+			var cDate = new Date(UNIX_timestamp * 1000);
 			var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-			var month = months[a.getMonth()];
-			var day = a.getDate();
-			var hour = a.getHours();
-			var min = a.getMinutes();
-			var sec = a.getSeconds();
+			var month = months[cDate.getMonth()];
+			var day = cDate.getDate();
+			var hour = cDate.getHours();
+			var min = cDate.getMinutes();
+			var sec = cDate.getSeconds();
 			var time = day +' ' + month + ' ' + hour + ':' + min + ':' + sec ;
 			return time;
 		}
-		
+
 		//locate coords if user allows and invoke makeJSON()
 		function gettingJSON(){
-
+			$('.btn-switch-temp').addClass('active');
 			var options = {
 				enableHighAccuracy: true,
 				timeout: 5000,
 				maximumAge: 0
 			}
-			
+
 			function success(pos) {
 				var lat = pos.coords.latitude;
 				var lon = pos.coords.longitude;
 
 				makeJSON(lat,lon);
 			}
-			
+
 			function error(err) {
-				console.warn(`ERROR(${err.code}): ${err.message}`);
+				alert('user denied GEOLOCATION');
 			}
 
 			navigator.geolocation.getCurrentPosition(success, error, options);		
-			
+
 		}
-			
+
 		// concatenate json string and invoke makeThings()
 		function makeJSON (lat, lon) {
-			
+
 			jsonStr +=ke.join('') + "/" + lat + "," + lon + "?" + exclude + "&" +units + "&" + "callback=?";
-			
-			
-			
+
 			makeThings(jsonStr);
-			console.log(jsonStr);
 		}
-			
-		//get json 
+
+		//get json and write data
 		function makeThings(jsonUrl) {	
-			
+
 			//why this doesn't work and $.getJSON does?
 			/*var request = new XMLHttpRequest();
 			request.open('GET', url);
@@ -103,23 +110,23 @@
 			request.onload = function() {
 				console.log(request.response);  
 			}*/
-			
-			
+
+
 			$.getJSON(jsonUrl, function(json) {
-				
+
 				var cur = json['currently'];
 				var temperature = Math.round(cur['temperature']*10)/10;
-				
+
 				skycons.add("icon1", cur['icon']);
-				
+
 				$('.disp-region').html(json.timezone);
 				$('.disp-temp').html(temperature + ' &#8451;');
 				$('.disp-date').html(timeConverter(cur['time']));
-				
+
 				skycons.play();
 			});
-			
-			
+
+
 		}
 		
 		
