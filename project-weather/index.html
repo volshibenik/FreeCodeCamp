@@ -86,14 +86,7 @@
 			
 			jsonStr +=ke.join('') + "/" + lat + "," + lon + "?" + exclude + "&" +units + "&" + "callback=?";
 			
-			/*var request = new XMLHttpRequest();
 			
-			request.open('GET', url);
-			request.responseType = 'json';
-			request.send();
-			request.onload = function() {
-				console.log(request.response);  //somehow this doesn't work but jquery $.getJSON does
-			}*/
 			
 			makeThings(jsonStr);
 			console.log(jsonStr);
@@ -101,6 +94,16 @@
 			
 		//get json 
 		function makeThings(jsonUrl) {	
+			
+			//why this doesn't work and $.getJSON does?
+			/*var request = new XMLHttpRequest();
+			request.open('GET', url);
+			request.responseType = 'json';
+			request.send();
+			request.onload = function() {
+				console.log(request.response);  
+			}*/
+			
 			
 			$.getJSON(jsonUrl, function(json) {
 				
@@ -123,6 +126,7 @@
 	
 	
 	</script>
+	
 	<!--aeris weather   
 login 
 ZHDYPPNKuXJNHuVVuQfFA
