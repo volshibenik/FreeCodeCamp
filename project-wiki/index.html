@@ -8,51 +8,46 @@
 </head>
 <body>
 	<input type="text" name="text" id="text-input">
-	<button onclick="go()">!</button>
+	<button onclick="go()" class="btn">Search</button>
+	<a href="https://en.wikipedia.org/wiki/Special:Random" target="_blank" class="link-random btn">Click for a random article</a>
 	<ul id="search-list"></ul>
 
-	<p class="disp"></p>
+	
 	
 	<script>
-		//variables
-		var jsonStr = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=";
-		
-		
-		
 		
 		
 		function go() {
+			var jsonStr = "https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=";
+			
 			var searchString = document.getElementById('text-input').value;
-			console.log(searchString);
+			
 			jsonStr += searchString + "&callback=?";
 			console.log(jsonStr);
+			var list = document.getElementById('search-list');
+
+			list.innerHTML = "";
+			
+			if (searchString === "") return;
+			
 			$.getJSON(jsonStr, function(json) {
 
 				var searchResults = json['query']['search'];
-				console.log(json);
-				var list = document.getElementById('search-list');
+
 				for (var i = 0; i <= 9; i++ ) {
 					var li = document.createElement('li');
 					var h2 = document.createElement('h2');
-
+					var a = document.createElement('a');
+					
 					h2.textContent = searchResults[i]['title'];
-					li.innerHTML = searchResults[i]['snippet'];
-					li.prepend(h2);
+					a.innerHTML = searchResults[i]['snippet'];
+					a.prepend(h2);
+					li.appendChild(a);
 					list.appendChild(li);
 				}
 
 			});
-			
 		}
-		
-		console.log(jsonStr);
-		
-		
-			
-				
-		
-	
-	
 	</script>
 
 </body>
