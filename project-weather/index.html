@@ -37,10 +37,8 @@
 				//variables
 				exclude = "exclude=minutely,hourly,daily,alerts,flags",
 				units = "units=ca";
-
 		//init skycons icon pack
 		var skycons = new Skycons({"color" : "white"});
-
 		//switch between celsius and fahrenheit
 		function switchTemp (el) {
 			var t = +(($('.disp-temp').html()).slice(0,-2));
@@ -53,7 +51,6 @@
 				$('.disp-temp').html( Math.round((t*1.8+32)*10)/10 + ' &#8457;');
 			}
 		}
-
 		//convert unix time from API to date
 		function timeConverter(UNIX_timestamp){
 			var cDate = new Date(UNIX_timestamp * 1000);
@@ -66,7 +63,6 @@
 			var time = day +' ' + month + ' ' + hour + ':' + min + ':' + sec ;
 			return time;
 		}
-
 		//locate coords if user allows and invoke makeJSON()
 		function gettingJSON(){
 			$('.btn-switch-temp').addClass('active');
@@ -75,33 +71,23 @@
 				timeout: 5000,
 				maximumAge: 0
 			}
-
 			function success(pos) {
 				var lat = pos.coords.latitude;
 				var lon = pos.coords.longitude;
-
 				makeJSON(lat,lon);
 			}
-
 			function error(err) {
 				alert('user denied GEOLOCATION');
 			}
-
 			navigator.geolocation.getCurrentPosition(success, error, options);		
-
 		}
-
 		// concatenate json string and invoke makeThings()
 		function makeJSON (lat, lon) {
-
 			jsonStr +=ke.join('') + "/" + lat + "," + lon + "?" + exclude + "&" +units + "&" + "callback=?";
-
 			makeThings(jsonStr);
 		}
-
 		//get json and write data
 		function makeThings(jsonUrl) {	
-
 			//why this doesn't work and $.getJSON does?
 			/*var request = new XMLHttpRequest();
 			request.open('GET', url);
@@ -110,23 +96,15 @@
 			request.onload = function() {
 				console.log(request.response);  
 			}*/
-
-
 			$.getJSON(jsonUrl, function(json) {
-
 				var cur = json['currently'];
 				var temperature = Math.round(cur['temperature']*10)/10;
-
 				skycons.add("icon1", cur['icon']);
-
 				$('.disp-region').html(json.timezone);
 				$('.disp-temp').html(temperature + ' &#8451;');
 				$('.disp-date').html(timeConverter(cur['time']));
-
 				skycons.play();
 			});
-
-
 		}
 		
 		

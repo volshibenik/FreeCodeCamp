@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>twitch API</title>
+</head>
+<body>
+	
+	
+	
+	
+	<script>
+		var jsonStr  = "https://wind-bow.glitch.me/twitch-api/streams/";
+		var arr= ["alanzoka", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+		jsonStr+=arr[1];
+		
+		var request = new XMLHttpRequest();
+		
+		request.open('GET', jsonStr, true);
+		
+		request.onload = function() {
+			if (this.status >= 200 && this.status < 400) {
+				// Success!
+				var data = JSON.parse(this.response);
+				console.log(data['stream']['viewers']);
+			} else {
+				// We reached our target server, but it returned an error
+				
+			}
+		};
+		
+		request.onerror = function() {
+			// There was a connection error of some sort
+		};
+		
+		request.send();
+		
+		
+		
+		
+		
+	</script>
+</body>
+</html>
