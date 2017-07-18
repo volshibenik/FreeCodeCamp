@@ -5,35 +5,52 @@
 	<title>twitch API</title>
 </head>
 <body>
-	
+	<ul class="channel-list">
+		
+	</ul>
 	
 	
 	
 	<script>
-		var jsonStr  = "https://wind-bow.glitch.me/twitch-api/streams/";
-		var arr= ["alanzoka", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
-		jsonStr+=arr[1];
+		const jsonStr  = "https://wind-bow.glitch.me/twitch-api/streams/";
+		var arr= ["alanzoka", "thijshs", "silvername", "playhearthstone", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
 		
-		var request = new XMLHttpRequest();
+		function process_request(channel) {
+			var request = new XMLHttpRequest();
+
+			request.open('GET', jsonStr+channel, true);
+
+			request.onload = function() {
+				if (this.status >= 200 && this.status < 400) {
+					// Success!
+					var data = JSON.parse(this.response);
+					if (data['stream'] !== null)
+					console.log(data['stream']['channel']['display_name'], ' : ', data['stream']['viewers']);
+					
+				} else {
+					// We reached our target server, but it returned an error
+					console.log('errorrr!');
+				}
+			};
+
+			request.onerror = function() {
+				console.log('eeee');
+			};
+
+			request.send();
+
+		} /*end process_request*/
 		
-		request.open('GET', jsonStr, true);
+		for (var i =0; i < arr.length; i++) {
+		 process_request(arr[i]);
+			
+			
+
+		}
 		
-		request.onload = function() {
-			if (this.status >= 200 && this.status < 400) {
-				// Success!
-				var data = JSON.parse(this.response);
-				console.log(data['stream']['viewers']);
-			} else {
-				// We reached our target server, but it returned an error
-				
-			}
-		};
 		
-		request.onerror = function() {
-			// There was a connection error of some sort
-		};
 		
-		request.send();
+		
 		
 		
 		
