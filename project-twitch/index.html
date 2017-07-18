@@ -12,20 +12,45 @@
 	
 	
 	<script>
-		const jsonStr  = "https://wind-bow.glitch.me/twitch-api/streams/";
-		var arr= ["alanzoka", "thijshs", "silvername", "playhearthstone", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "storbeck", "habathcx", "RobotCaleb", "noobs2ninjas"];
+		const jsonStr  = "https://wind-bow.glitch.me/twitch-api/",
+					list = document.querySelector('.channel-list');
+		console.log(list);
+		var streams = "streams/",
+				channels = "channels/",
+		 		arr= ["thijshs", "silvername", "playhearthstone", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"];
 		
-		function process_request(channel) {
+		function buildList(streamer) {
+			
 			var request = new XMLHttpRequest();
-
-			request.open('GET', jsonStr+channel, true);
-
+			request.open('GET', jsonStr + channels + streamer, true);
+			request.onload = function() {
+				if (this.status >= 200 && this.status < 400) {
+					
+					var myData = JSON.parse(this.response);
+					var myLi = document.createElement('li');
+					var myImg = document.createElement('img');
+					myLi.textContent = myData['display_name'];
+					myLi.setAttribute('class', streamer);
+					myImg.setAttribute('src', myData['logo']);
+					myLi.appendChild(myImg);
+					list.appendChild(myLi);
+				} 
+			};
+			request.send();
+		}
+		
+		function process_request(streamer) {
+			var request = new XMLHttpRequest();
+			request.open('GET', jsonStr+streams+streamer, true);
 			request.onload = function() {
 				if (this.status >= 200 && this.status < 400) {
 					// Success!
 					var data = JSON.parse(this.response);
-					if (data['stream'] !== null)
-					console.log(data['stream']['channel']['display_name'], ' : ', data['stream']['viewers']);
+					if (data['stream'] !== null) {
+						console.log(data['stream']['channel']['display_name'], ' : ', data['stream']['viewers']);
+						var targetLi = document.querySelector('.'+streamer);
+						targetLi.classList.add('active');
+					}
 					
 				} else {
 					// We reached our target server, but it returned an error
@@ -41,14 +66,13 @@
 
 		} /*end process_request*/
 		
-		for (var i =0; i < arr.length; i++) {
-		 process_request(arr[i]);
-			
-			
-
+		for (var i = 0; i < arr.length; i++) {
+		 buildList(arr[i]);
 		}
-		
-		
+		for (var i = 0; i < arr.length; i++) {
+		 process_request(arr[i]);
+		}
+		 
 		
 		
 		
