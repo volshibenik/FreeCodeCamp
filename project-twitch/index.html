@@ -3,21 +3,27 @@
 <head>
 	<meta charset="UTF-8">
 	<title>twitch API</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<ul class="channel-list">
-		
-	</ul>
+
+	<input type="radio" name="streamers-display" id="rad1" checked>
+	<label for="rad1">Display everyone</label>
+	<input type="radio" name="streamers-display" id="rad2">
+	<label for="rad2">Just online</label>
+	<input type="radio" name="streamers-display" id="rad3">
+	<label for="rad1">Offline only(for some strange reason...)</label>
+	<!--radio-group need to be right before .channel-list, otherwise fix CSS selectors-->
 	
-	
-	
+	<ul class="channel-list"></ul>
+
 	<script>
 		const jsonStr  = "https://wind-bow.glitch.me/twitch-api/",
 					list = document.querySelector('.channel-list');
-		console.log(list);
+		
 		var streams = "streams/",
 				channels = "channels/",
-		 		arr= ["thijshs", "silvername", "playhearthstone", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "habathcx", "RobotCaleb", "noobs2ninjas"];
+				channelsList= ["thijshs", "comster404", "playhearthstone", "ESL_SC2", "OgamingSC2", "cretetion", "freecodecamp", "noobs2ninjas"];
 		
 		function buildList(streamer) {
 			
@@ -26,20 +32,45 @@
 			request.onload = function() {
 				if (this.status >= 200 && this.status < 400) {
 					
-					var myData = JSON.parse(this.response);
-					var myLi = document.createElement('li');
-					var myImg = document.createElement('img');
-					myLi.textContent = myData['display_name'];
+					var myData = JSON.parse(this.response),
+							
+					    myLi = document.createElement('li'),
+							myA = document.createElement('a'),
+					    myImg = document.createElement('img'),
+							myH2 = document.createElement('h2'),
+							myP = document.createElement('p');
+					
+					if (myData.error) {
+						myImg.setAttribute('src', 'https://placehold.it/300x300')
+						myH2.textContent = streamer;
+						myP.textContent = 'No such streamer!';
+						myLi.appendChild(myImg);
+						myLi.appendChild(myH2);
+						myLi.appendChild(myP);
+						list.appendChild(myLi);
+						return;
+					}
+					
 					myLi.setAttribute('class', streamer);
+					myA.setAttribute('href', myData['url']);
+					myA.setAttribute('target', '_blank');
+					myA.textContent = 'Go to channel';
+					myH2.textContent = myData['display_name'];
+					myP.textContent = 'Offline';
 					myImg.setAttribute('src', myData['logo']);
+					
 					myLi.appendChild(myImg);
+					myLi.appendChild(myH2);
+					myLi.appendChild(myA);
+					myLi.appendChild(myP);
+					
 					list.appendChild(myLi);
 				} 
 			};
 			request.send();
 		}
 		
-		function process_request(streamer) {
+		function check_online(streamer) {
 			var request = new XMLHttpRequest();
 			request.open('GET', jsonStr+streams+streamer, true);
 			request.onload = function() {
@@ -49,34 +80,26 @@
 					if (data['stream'] !== null) {
 						console.log(data['stream']['channel']['display_name'], ' : ', data['stream']['viewers']);
 						var targetLi = document.querySelector('.'+streamer);
+						var targetP = targetLi.lastChild;  //<p> should be last in <li>!!!!
 						targetLi.classList.add('active');
+						targetP.textContent = data['stream']['channel']['status'];
 					}
-					
-				} else {
-					// We reached our target server, but it returned an error
-					console.log('errorrr!');
-				}
+				} 
 			};
 
-			request.onerror = function() {
-				console.log('eeee');
-			};
 
 			request.send();
-
 		} /*end process_request*/
 		
-		for (var i = 0; i < arr.length; i++) {
-		 buildList(arr[i]);
+		for (var i = 0; i < channelsList.length; i++) {
+			buildList(channelsList[i]);
 		}
-		for (var i = 0; i < arr.length; i++) {
-		 process_request(arr[i]);
-		}
-		 
 		
-		
-		
-		
+		setTimeout( function() {
+			for (var i = 0; i < channelsList.length; i++) {
+				check_online(channelsList[i]);
+			}
+		},1000);
 		
 		
 		
