@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Calculator</title>
+</head>
+<body>
+	<input type="text" name="main-input" id="main-input">
+	
+	<button id="plus">+</button>
+	<button id="minus">-</button>
+	<button id="eq">=</button>
+	<input type="text" id="memo">
+	<script>
+		var memory = '0+';
+		var plus = document.getElementById('plus');
+		var eq = document.getElementById('eq');
+		var input = document.getElementById('main-input');
+		var memo = document.getElementById('memo');
+		
+		
+		plus.addEventListener('click', function(){
+			
+			memory +='+' + input.value;
+		//	memory = eval(memory);
+			memo.value = +memory;
+
+			
+		});
+		minus.addEventListener('click', function(){
+
+			memory +=input.value + '-';
+			//	memory = eval(memory);
+			memo.value = memory;
+			input.value = eval(memory);
+
+		});
+		
+		eq.addEventListener('click', function(){
+			
+		})
+		
+	</script>
+</body>
+</html>
