@@ -14,6 +14,7 @@
 	<script>
 	//	var memory = '0+';
 		var plus = document.getElementById('plus');
+		var minus = document.getElementById('minus');
 		var eq = document.getElementById('eq');
 		var input = document.getElementById('main-input');
 		var memo = document.getElementById('memo');
@@ -23,15 +24,24 @@
 		var txt = '';
 		var op = '+';
 		
-		plus.addEventListener('click', function(){
-		/*	
-		
-			memory +='+' + input.value;
-		//	memory = eval(memory);
-			memo.value = +memory;
-*/		scr = input.value;
+		var math_op = function (operator) {
+			scr = input.value;
 			
-			txt = txt+op+scr //mem + op + scr;
+			txt = txt? txt+op+scr : scr;
+			
+			cur = eval(cur + op + scr);
+			
+			op = operator;
+			
+			input.value = cur;
+			
+			memo.value = txt;
+		}
+		
+		plus.addEventListener('click', function(){
+			scr = input.value;
+			
+			txt = txt? txt+op+scr : scr;
 			
 			cur = eval(cur + op + scr);
 			
@@ -42,14 +52,8 @@
 			memo.value = txt;
 			
 		});
-		minus.addEventListener('click', function(){
-
-			memory +=input.value + '-';
-			//	memory = eval(memory);
-			memo.value = memory;
-			input.value = eval(memory);
-
-		});
+		var a = '-';
+		minus.addEventListener('click', function(){math_op(a)});
 		
 		eq.addEventListener('click', function(){
 			
