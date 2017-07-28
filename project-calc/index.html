@@ -9,51 +9,97 @@
 	
 	<button id="plus">+</button>
 	<button id="minus">-</button>
+	<button id="multi">*</button>
+	<button id="divide">/</button>
 	<button id="eq">=</button>
 	<input type="text" id="memo">
+	
+	<button class="num" id="num_one">1</button>
+	<button class="num" id="num_two">2</button>
+	<button class="num" id="num_three">3</button>
+	<button class="num" id="num_four">4</button>
+	<button class="num" id="num_five">5</button>
+	<button class="num" id="num_six">6</button>
+	<button class="num" id="num_seven">7</button>
+	<button class="num" id="num_eight">8</button>
+	<button class="num" id="num_nine">9</button>
+	<button class="num" id="num_zero">0</button>
 	<script>
 	//	var memory = '0+';
 		var plus = document.getElementById('plus');
 		var minus = document.getElementById('minus');
+		var multi = document.getElementById('multi');
+		var divide = document.getElementById('divide');
 		var eq = document.getElementById('eq');
 		var input = document.getElementById('main-input');
 		var memo = document.getElementById('memo');
+		
+		var num_one = document.getElementById('num_one');
+		var num_two = document.getElementById('num_two');
+		var num_three = document.getElementById('num_three');
+		var num_four = document.getElementById('num_four');
+		var num_five = document.getElementById('num_five');
+		var num_six = document.getElementById('num_six');
+		var num_seven = document.getElementById('num_seven');
+		var num_eight = document.getElementById('num_eight');
+		var num_nine = document.getElementById('num_nine');
+		var num_zero = document.getElementById('num_zero');
+		
+		
+		
 		
 		var cur = '0';
 		var scr;
 		var txt = '';
 		var op = '+';
 		
-		var math_op = function (operator) {
-			scr = input.value;
-			
-			txt = txt? txt+op+scr : scr;
-			
-			cur = eval(cur + op + scr);
-			
-			op = operator;
-			
-			input.value = cur;
-			
-			memo.value = txt;
+		var type_num = function (number) {
+			if (input.classList.contains('calculated')) {
+				input.value = number;
+			} else {
+				input.value += number;
+			}
+			input.classList.remove('calculated');
 		}
 		
-		plus.addEventListener('click', function(){
-			scr = input.value;
+		
+		var math_op = function (operator) {
+			if (input.classList.contains('calculated')) {
+				op = operator;
+			} else {
+				scr = input.value;
+
+				txt = txt? txt+op+scr : scr;
+
+				cur = eval(cur + op + scr);
+
+				op = operator;
+
+				input.value = cur;
+				input.classList.add('calculated'); 
+
+				memo.value = txt;
+			}
 			
-			txt = txt? txt+op+scr : scr;
-			
-			cur = eval(cur + op + scr);
-			
-			op = '+';
-			
-			input.value = cur;
-			
-			memo.value = txt;
-			
-		});
-		var a = '-';
-		minus.addEventListener('click', function(){math_op(a)});
+		}
+		
+		num_one.addEventListener('click', function(){type_num('1')});
+		num_two.addEventListener('click', function(){type_num('2')});
+		num_three.addEventListener('click', function(){type_num('3')});
+		num_four.addEventListener('click', function(){type_num('4')});
+		num_five.addEventListener('click', function(){type_num('5')});
+		num_six.addEventListener('click', function(){type_num('6')});
+		num_seven.addEventListener('click', function(){type_num('7')});
+		num_eight.addEventListener('click', function(){type_num('8')});
+		num_nine.addEventListener('click', function(){type_num('9')});
+		num_zero.addEventListener('click', function(){type_num('0')});
+		
+	
+		plus.addEventListener('click', function(){math_op('+')});
+		minus.addEventListener('click', function(){math_op('-')});
+		multi.addEventListener('click', function(){math_op('*')});
+		divide.addEventListener('click', function(){math_op('/')});
+		
 		
 		eq.addEventListener('click', function(){
 			
