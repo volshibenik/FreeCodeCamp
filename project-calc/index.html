@@ -3,29 +3,49 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Calculator</title>
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<input type="text" name="main-input" id="main-input">
-	
-	<button id="plus">+</button>
-	<button id="minus">-</button>
-	<button id="multi">*</button>
-	<button id="divide">/</button>
-	<button id="eq">=</button>
-	<input type="text" id="memo">
-	
-	<button class="num" id="num_one">1</button>
-	<button class="num" id="num_two">2</button>
-	<button class="num" id="num_three">3</button>
-	<button class="num" id="num_four">4</button>
-	<button class="num" id="num_five">5</button>
-	<button class="num" id="num_six">6</button>
-	<button class="num" id="num_seven">7</button>
-	<button class="num" id="num_eight">8</button>
-	<button class="num" id="num_nine">9</button>
-	<button class="num" id="num_zero">0</button>
+	<div class="calc-body">
+		<input type="text" name="main-input" id="main-input">
+		<input type="text" id="memo">
+		
+		
+		
+		
+		<div class="numbers">
+			<button class="num btn bttn-unite bttn-md" id="num_one">1</button>
+			<button class="num btn" id="num_two">2</button>
+			<button class="num btn" id="num_three">3</button>
+			<button class="num btn" id="num_four">4</button>
+			<button class="num btn" id="num_five">5</button>
+			<button class="num btn" id="num_six">6</button>
+			<button class="num btn" id="num_seven">7</button>
+			<button class="num btn" id="num_eight">8</button>
+			<button class="num btn" id="num_nine">9</button>
+			<button class="num btn" id="num_zero">0</button>
+			
+			<button class="num btn" id="num_decimal">,</button>
+			
+		</div>
+		
+		<div class="math-ops">
+			<button class="btn" id="clear">CE</button>
+			<button class="btn" id="back">L--</button>
+			<button class="btn" id="plus">+</button>
+			<button class="btn" id="minus">-</button>
+			<button class="btn" id="multi">*</button>
+			<button class="btn" id="divide">/</button>
+			<button class="btn" id="eq">=</button>
+		</div>
+		
+	</div>
 	<script>
-	//	var memory = '0+';
+
+		//buttons
+		
+		var clear = document.getElementById('clear');
+		var back = document.getElementById('back');
 		var plus = document.getElementById('plus');
 		var minus = document.getElementById('minus');
 		var multi = document.getElementById('multi');
@@ -46,14 +66,30 @@
 		var num_zero = document.getElementById('num_zero');
 		
 		
-		
+		//variables
 		
 		var cur = '0';
 		var scr;
 		var txt = '';
 		var op = '+';
 		
+		function clearing() {
+			cur = 0; 
+			scr = 0; 
+			txt = ''; 
+			input.value = '';
+			memo.value = '';
+			op = '+';
+			input.classList.remove('calculated'); 
+			input.classList.remove('equated');
+		}
+		
+		
 		var type_num = function (number) {
+			if (input.classList.contains('equated')) {
+				clearing();
+			}
+			
 			if (input.classList.contains('calculated')) {
 				input.value = number;
 			} else {
@@ -64,12 +100,13 @@
 		
 		
 		var math_op = function (operator) {
+			input.classList.remove('equated');
 			if (input.classList.contains('calculated')) {
 				op = operator;
 			} else {
-				scr = input.value;
+				scr = input.value || 0;
 
-				txt = txt? txt+op+scr : scr;
+				txt = txt!==''? txt+op+scr : scr;
 
 				cur = eval(cur + op + scr);
 
@@ -93,7 +130,7 @@
 		num_eight.addEventListener('click', function(){type_num('8')});
 		num_nine.addEventListener('click', function(){type_num('9')});
 		num_zero.addEventListener('click', function(){type_num('0')});
-		
+		num_decimal.addEventListener('click', function(){type_num('.')});
 	
 		plus.addEventListener('click', function(){math_op('+')});
 		minus.addEventListener('click', function(){math_op('-')});
@@ -102,8 +139,39 @@
 		
 		
 		eq.addEventListener('click', function(){
+			if (!input.classList.contains('equated')) {
+				scr = input.value;
+			} 
+				
+		//		txt = txt+op+scr;
+			txt = '';
+
+			cur = eval(cur + op + scr);
+			input.value = cur;
+			memo.value = txt;
+		//	txt = '';
+			input.classList.add('calculated'); 
+			input.classList.add('equated');
 			
-		})
+		});
+		
+		back.addEventListener('click', function(){
+			if (!input.classList.contains('calculated')) {
+				var toTrim = input.value;
+				toTrim = toTrim.slice(0, toTrim.length-1);
+				input.value = toTrim;
+			} 
+		});
+		
+	  clear.addEventListener('click', clearing);
+		
+		/*function numFromKeyboard(e) {
+			console.log(e.keyCode);
+			
+		}
+		
+		window.addEventListener('keydown', numFromKeyboard);
+		*/
 		
 	</script>
 </body>
