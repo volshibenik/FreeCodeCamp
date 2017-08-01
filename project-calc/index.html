@@ -4,59 +4,141 @@
 	<meta charset="UTF-8">
 	<title>Calculator</title>
 	<link rel="stylesheet" href="style.css">
+
 </head>
 <body>
 	<div class="calc-body">
 		<input type="text" name="main-input" id="main-input">
+		<label for="memo">Ops tracker:</label>
 		<input type="text" id="memo">
 		
 		
 		
-		
-		<div class="numbers">
-			<button class="num btn bttn-unite bttn-md" id="num_one">1</button>
-			<button class="num btn" id="num_two">2
-			<span class="goo goo-1"></span>
-			<span class="goo goo-2"></span>
-			<span class="goo goo-3"></span>
-			<span class="goo goo-4"></span>
-			<span class="goo goo-5"></span>
-			<span class="goo goo-6"></span>
-			<span class="goo goo-7"></span>
-			<span class="goo goo-8"></span>
-			<span class="goo goo-9"></span>
-			</button>
-			<button class="num btn" id="num_three">3
-			<span class="goo goo-1"></span>
-			<span class="goo goo-2"></span>
-			<span class="goo goo-3"></span>
-			<span class="goo goo-4"></span>
-			<span class="goo goo-5"></span>
-			<span class="goo goo-6"></span>
-			<span class="goo goo-7"></span>
-			<span class="goo goo-8"></span>
-			<span class="goo goo-9"></span>
-			</button>
-			<button class="num btn" id="num_four">4</button>
-			<button class="num btn" id="num_five">5</button>
-			<button class="num btn" id="num_six">6</button>
-			<button class="num btn" id="num_seven">7</button>
-			<button class="num btn" id="num_eight">8</button>
-			<button class="num btn" id="num_nine">9</button>
-			<button class="num btn" id="num_zero">0</button>
+	
+		<div class="calc-buttons">
+			<div class="numbers">
+				<button class="num btn" id="num_one">1
+					<span class="goo goo-1"></span>
+<!--					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span>-->
+				</button>
+				<button class="num btn" id="num_two">2
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+			<!--		<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span>-->
+				</button>
+				<button class="num btn" id="num_three">3
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+		<!--			<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span> -->
+				</button>
+				<button class="num btn" id="num_four">4
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+<!--					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span>-->
+				</button>
+				<button class="num btn" id="num_five">5
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+			<!--		<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span>-->
+				</button>
+				<button class="num btn" id="num_six">6
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+<!--					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span>-->
+				</button>
+				<button class="num btn" id="num_seven">7
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+<!--					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span>-->
+				</button>
+				<button class="num btn" id="num_eight">8
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+<!--					<span class="goo goo-9"></span>-->
+				</button>
+				<button class="num btn" id="num_nine">9
+					<span class="goo goo-1"></span>
+					<span class="goo goo-2"></span>
+					<span class="goo goo-3"></span>
+					<span class="goo goo-4"></span>
+					<span class="goo goo-5"></span>
+					<span class="goo goo-6"></span>
+					<span class="goo goo-7"></span>
+					<span class="goo goo-8"></span>
+					<span class="goo goo-9"></span>
+				</button>
+				<button class="num btn" id="num_zero">0</button>
+				
+				<button class="num btn" id="num_decimal">.</button>
+				
+			</div>
 			
-			<button class="num btn" id="num_decimal">,</button>
-			
-		</div>
-		
-		<div class="math-ops">
-			<button class="btn" id="clear">CE</button>
-			<button class="btn" id="back">L--</button>
-			<button class="btn" id="plus">+</button>
-			<button class="btn" id="minus">-</button>
-			<button class="btn" id="multi">*</button>
-			<button class="btn" id="divide">/</button>
-			<button class="btn" id="eq">=</button>
+			<div class="math-ops">
+				<button class="btn btn-math" id="clear">CE</button>
+				<button class="btn btn-math" id="back">L--</button>
+				<button class="btn btn-math" id="plus">
+					<svg version="1.1" id="sv1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+							 viewBox="-22 -22 84 84" style="enable-background:new 0 0 42 42;" xml:space="preserve">
+						<path d="M37.059,16H26V4.941C26,2.224,23.718,0,21,0s-5,2.224-5,4.941V16H4.941C2.224,16,0,18.282,0,21s2.224,5,4.941,5H16v11.059
+										 C16,39.776,18.282,42,21,42s5-2.224,5-4.941V26h11.059C39.776,26,42,23.718,42,21S39.776,16,37.059,16z"/>
+					
+					</svg>
+				</button>
+				<button class="btn btn-math" id="minus">-</button>
+				<button class="btn btn-math" id="multi">*
+				</button>
+				<button class="btn btn-math" id="divide">/</button>
+				<button class="btn btn-math" id="eq">=</button>
+			</div>
 		</div>
 		
 	</div>
@@ -93,7 +175,19 @@
 		var txt = '';
 		var op = '+';
 		
+		
+		//common functions
+		
 		function clearing() {
+			
+			if (this.id) {
+				this.classList.add('effect-clear');
+				
+				setTimeout(() => {
+					this.classList.remove('effect-clear'); 
+				}, 350);
+			};
+			
 			cur = 0; 
 			scr = 0; 
 			txt = ''; 
@@ -105,7 +199,8 @@
 		}
 		
 		
-		var type_num = function (number) {
+		var type_num = function (number, el) {
+			el.classList.add('clickio');
 			if (input.classList.contains('equated')) {
 				clearing();
 			}
@@ -116,10 +211,13 @@
 				input.value += number;
 			}
 			input.classList.remove('calculated');
+			setTimeout(function(){
+				el.classList.remove('clickio');
+			},1100);
 		}
 		
 		
-		var math_op = function (operator) {
+		var math_op = function (operator, el) {
 			input.classList.remove('equated');
 			if (input.classList.contains('calculated')) {
 				op = operator;
@@ -137,25 +235,32 @@
 
 				memo.value = txt;
 			}
+			//decoration CSS
+			el.classList.add('effect');
+			setTimeout(function(){
+				el.classList.remove('effect');
+			},350)
 			
 		}
 		
-		num_one.addEventListener('click', function(){type_num('1')});
-		num_two.addEventListener('click', function(){type_num('2')});
-		num_three.addEventListener('click', function(){type_num('3')});
-		num_four.addEventListener('click', function(){type_num('4')});
-		num_five.addEventListener('click', function(){type_num('5')});
-		num_six.addEventListener('click', function(){type_num('6')});
-		num_seven.addEventListener('click', function(){type_num('7')});
-		num_eight.addEventListener('click', function(){type_num('8')});
-		num_nine.addEventListener('click', function(){type_num('9')});
-		num_zero.addEventListener('click', function(){type_num('0')});
-		num_decimal.addEventListener('click', function(){type_num('.')});
+		//main stuff
+		
+		num_one.addEventListener('click', function(){type_num('1', this)});
+		num_two.addEventListener('click', function(){type_num('2', this)});
+		num_three.addEventListener('click', function(){type_num('3', this)});
+		num_four.addEventListener('click', function(){type_num('4', this)});
+		num_five.addEventListener('click', function(){type_num('5', this)});
+		num_six.addEventListener('click', function(){type_num('6', this)});
+		num_seven.addEventListener('click', function(){type_num('7', this)});
+		num_eight.addEventListener('click', function(){type_num('8', this)});
+		num_nine.addEventListener('click', function(){type_num('9', this)});
+		num_zero.addEventListener('click', function(){type_num('0', this)});
+		num_decimal.addEventListener('click', function(){type_num('.', this)});
 	
-		plus.addEventListener('click', function(){math_op('+')});
-		minus.addEventListener('click', function(){math_op('-')});
-		multi.addEventListener('click', function(){math_op('*')});
-		divide.addEventListener('click', function(){math_op('/')});
+		plus.addEventListener('click', function(){math_op('+', this)});
+		minus.addEventListener('click', function(){math_op('-', this)});
+		multi.addEventListener('click', function(){math_op('*', this)});
+		divide.addEventListener('click', function(){math_op('/', this)});
 		
 		
 		eq.addEventListener('click', function(){
