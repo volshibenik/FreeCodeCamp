@@ -58,51 +58,60 @@
 }
 #divide {
 	position: relative;
+	transition: 1s;
+
+	&:before {
+		content: '';
+		position: absolute;
+		width: 0px;
+		height: 50px;
+		top: 0;
+		left: 30px;
+
+		background-color:lightcyan;
+		transition: 1s;
+	}
+	
+	&:after {
+		content: '';
+		position: absolute;
+		border-radius: 4px;
+		width: 20px;
+		height: 50px;
+		background-color: green;
+		top: 0;
+		right: 0;
+		transition: 1s;
+	}
 	
 	//change coords to translate
-	&:hover {
-		left: -10px;
+	&.effect {
+		width: 30px;
+
+		transform: translateX(-10px);
 		&:before {
-			left: 20px;
+			width: 20px;
 		}
 		&:after {
-			left: 20px;
+			transform: translateX(40px);
 		}
 	}
 }
 
-#divide:before {
-	content: '';
-	position: absolute;
-	width: 30px;
-	height: 50px;
-	background-color: red;
-	top: 0;
-	right: 0;
-	z-index: 3;
-	background-color: lightcyan;
-
-}
-#divide:after {
-	content: '';
-	position: absolute;
-	border-radius: 4px;
-	width: 50px;
-	height: 50px;
-	background-color: green;
-	top: 0;
-	right: 0;
-
-}
-
 #plus.effect svg {
-	transform: scale(1.2);
+	transform: scale(1.3);
+	transition: .2s;
+}
+#minus.effect svg {
+	transform: scale(.66);
 	transition: .2s;
 }
 #multi.effect {
 	transform: scale(1.2);
 	transition: .5s cubic-bezier(0,1,1,2);
 }
+
+
 .num {
 	position: relative;
 	background-color: #111;
