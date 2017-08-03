@@ -2,59 +2,130 @@
 * {
   box-sizing: border-box;
 }
+*::selection {
+  background: #ffb7b7;
+}
+*::-moz-selection {
+  background: #ffb7b7;
+}
+body {
+  background-color: seashell;
+}
+.title {
+  font-family: 'Montserrat';
+  font-size: 34px;
+  text-align: center;
+  color: antiquewhite;
+  text-shadow: 2px 2px 2px rgba(93, 168, 255, 0.66);
+}
+.copy {
+  text-align: center;
+  margin-top: 50px;
+  color: #999;
+}
 .calc-body {
   max-width: 600px;
   margin: 0 auto;
-  border: 1px solid red;
+  border: 1px solid rgba(255, 255, 255, 0.33);
   position: relative;
-  background-color: lightcyan;
-  box-shadow: 3px 3px 5px blue;
+  font-family: 'Montserrat';
+  background-color: #5da8ff;
+  box-shadow: 3px 3px 9px  #5da8ff;
 }
 .calc-buttons {
   display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  /*	align-items: center;
+	align-content: center;*/
+}
+.numbers {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 0 1 auto;
+  flex-basis: 550px;
+  padding-left: 50px;
+}
+.math-ops {
+  padding-right: 50px;
+  flex-basis: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding-left: 50px;
+  justify-content: space-around;
+}
+.btn-math {
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+}
+.btn-math:hover {
+  background-color: #fff94b;
 }
 #main-input {
-  width: 100%;
+  width: 90%;
   display: block;
-  margin: 0 auto;
+  font-family: 'Montserrat';
+  margin: 10px auto 0;
   height: 30px;
-  padding: 10px 20px 40px 20px;
+  letter-spacing: 1px;
+  padding: 30px 20px 40px 20px;
+  background-color: rgba(250, 250, 250, 0.77);
+  font-size: 20px;
+  border: 2px dashed grey;
 }
 .ops-tracker {
   position: relative;
-  padding-left: 50%;
-  top: -20px;
-  border: 1px solid yellow;
+  padding-left: 4%;
+  top: -25px;
+  width: 90%;
+  margin: 0 auto;
+}
+.ops-tracker label {
+  width: 32%;
+  color: gray;
 }
 #memo {
   border: 0;
+  width: 53%;
+  background-color: transparent;
+  font-family: 'Montserrat';
 }
 .btn {
-  display: inline-block;
   outline: none;
-  margin: 15px;
   border: 0;
+  cursor: pointer;
 }
 .num {
   position: relative;
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  font-size: 16px;
+  margin: 15px;
+  font-size: 26px;
   font-weight: bold;
   color: transparent;
 }
 .num:hover {
-  background-color: coral;
+  background-color: #fff94b;
 }
 .clickio {
-  color: mediumpurple;
-  transition: 1s;
-  text-shadow: 1px 1px 4px red;
+  color: #147EB2;
+  transition: .5s;
+  text-shadow: 2px 2px 6px #FF293F ;
 }
-#num_zero {
-  width: 50px;
-  border-radius: 100px;
+#num_decimal {
+  width: 120px;
+  height: 50px;
+  margin: 15px;
+  font-size: 40px;
+  border-radius: 10px;
+  color: #555;
+}
+#num_decimal:hover {
+  background-color: #fff94b;
 }
 .goo {
   position: absolute;
@@ -127,25 +198,25 @@
 }
 #num_one:hover .goo-1 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_two:hover .goo-1,
 #num_two:hover .goo-2 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_three:hover .goo-1,
 #num_three:hover .goo-2,
 #num_three:hover .goo-3 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_four:hover .goo-1,
 #num_four:hover .goo-2,
 #num_four:hover .goo-3,
 #num_four:hover .goo-4 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_five:hover .goo-1,
 #num_five:hover .goo-2,
@@ -153,7 +224,7 @@
 #num_five:hover .goo-4,
 #num_five:hover .goo-5 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_six:hover .goo-1,
 #num_six:hover .goo-2,
@@ -162,7 +233,7 @@
 #num_six:hover .goo-5,
 #num_six:hover .goo-6 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_seven:hover .goo-1,
 #num_seven:hover .goo-2,
@@ -172,7 +243,7 @@
 #num_seven:hover .goo-6,
 #num_seven:hover .goo-7 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_eight:hover .goo-1,
 #num_eight:hover .goo-2,
@@ -183,7 +254,7 @@
 #num_eight:hover .goo-7,
 #num_eight:hover .goo-8 {
   visibility: visible;
-  background-color: coral;
+  background-color: #fff94b;
 }
 #num_nine:hover .goo-1,
 #num_nine:hover .goo-2,
@@ -195,23 +266,15 @@
 #num_nine:hover .goo-8,
 #num_nine:hover .goo-9 {
   visibility: visible;
-  background-color: coral;
-}
-.btn-math {
-  width: 50px;
-  height: 50px;
-  border-radius: 4px;
-}
-.btn-math:hover {
-  background-color: yellow;
+  background-color: #fff94b;
 }
 #clear {
-  background-color: dodgerblue;
+  background-color: greenyellow;
   font-weight: bold;
 }
 #clear.effect-clear {
-  transition: .17s;
-  background-color: rgba(255, 0, 0, 0.75);
+  transition: .27s;
+  background-color: #FF293E;
 }
 #plus.effect svg {
   transform: scale(1.3);
@@ -240,7 +303,7 @@
   height: 50px;
   top: 0;
   left: 30px;
-  background-color: lightcyan;
+  background-color: #5da8ff;
   transition: 1s;
 }
 #divide:after {
@@ -255,17 +318,16 @@
   transition: transform 1s, width 1s;
 }
 #divide:hover:after {
-  background-color: yellow;
+  background-color: #fff94b;
 }
 #divide.effect {
-  width: 30px;
   transform: translateX(-10px);
 }
 #divide.effect:before {
   width: 20px;
 }
 #divide.effect:after {
-  transform: translateX(40px);
+  transform: translateX(25px);
 }
 #eq.effect svg {
   transition: 1s;

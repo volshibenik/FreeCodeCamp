@@ -4,19 +4,18 @@
 	<meta charset="UTF-8">
 	<title>Calculator</title>
 	<link rel="stylesheet" href="style.css">
-
+	<link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 </head>
 <body>
+	<h1 class="title">Javascript Calculator</h1>
 	<div class="calc-body">
 		<input type="text" name="main-input" id="main-input"  readonly>
 		<div class="ops-tracker">
-			<label for="memo">Ops tracker:</label>
+			<label for="memo">Operations tracker:</label>
 			<input type="text" id="memo"  readonly>
 		</div>
 		
 		
-		
-	
 		<div class="calc-buttons">
 			<div class="numbers">
 				<button class="num btn" id="num_one">1
@@ -120,7 +119,7 @@
 				</button>
 				<button class="num btn" id="num_zero">0</button>
 				
-				<button class="num btn" id="num_decimal">.</button>
+				<button class="btn" id="num_decimal">.</button>
 				
 			</div>
 			
@@ -131,16 +130,14 @@
 					<svg version="1.1" id="sv1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 							 viewBox="-22 -22 84 84" style="enable-background:new 0 0 42 42;" xml:space="preserve">
 						<path d="M37.059,16H26V4.941C26,2.224,23.718,0,21,0s-5,2.224-5,4.941V16H4.941C2.224,16,0,18.282,0,21s2.224,5,4.941,5H16v11.059
-										 C16,39.776,18.282,42,21,42s5-2.224,5-4.941V26h11.059C39.776,26,42,23.718,42,21S39.776,16,37.059,16z"/>
-					
-					</svg>
+										 C16,39.776,18.282,42,21,42s5-2.224,5-4.941V26h11.059C39.776,26,42,23.718,42,21S39.776,16,37.059,16z"/></svg>
 				</button>
 				<button class="btn btn-math" id="minus">
 					<svg  id="Layer_1" style="enable-background:new 0 0 512 512;" version="1.1" viewBox="0 0 512 512"  xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M417.4,224H94.6C77.7,224,64,238.3,64,256c0,17.7,13.7,32,30.6,32h322.8c16.9,0,30.6-14.3,30.6-32  C448,238.3,434.3,224,417.4,224z"/></svg>
 				</button>
 				<button class="btn btn-math" id="multi">
 					<svg version="1.1" id="aaa1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="-120 -120 600 600" style="enable-background:new 0 0 342.947 342.947;" xml:space="preserve">
+	 viewBox="-120 -120 600 600" style="enable-background:new 0 0 32 32;" xml:space="preserve">
 <polygon points="342.947,21.213 321.734,0 171.473,150.26 21.213,0 0,21.213 150.26,171.473 0,321.734 21.213,342.947 
 	171.473,192.686 321.734,342.947 342.947,321.734 192.686,171.473 "/></svg>
 				</button>
@@ -153,12 +150,10 @@
 		<path d="M80.872,3.471l-60.903,98.662c-2.122,3.436-1.055,7.938,2.38,10.057c1.196,0.738,2.521,1.092,3.832,1.092
 			c2.451,0,4.846-1.231,6.227-3.472l60.903-98.663c2.121-3.435,1.055-7.937-2.381-10.056C87.496-1.029,82.99,0.036,80.872,3.471z"/>
 	</g>
-</g>
-
-</svg>
+</g></svg>
 				</button>
 				<button class="btn btn-math" id="eq">
-					<svg version="1.1" id="eq1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+					<svg version="1.1" id="eq1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
 							 viewBox="-6.5 -6.5 45 45" style="enable-background:new 0 0 32 32;" xml:space="preserve">
 						<g>
 							<g>
@@ -173,6 +168,7 @@
 		</div>
 		
 	</div>
+	<p class="copy">Coded by Volshibenik in FreeCodeCamp, 2017</p>
 	<script>
 
 		//buttons
@@ -224,7 +220,7 @@
 			txt = ''; 
 			input.value = '';
 			memo.value = '';
-			op = '+';
+			op = '';
 			input.classList.remove('calculated'); 
 			input.classList.remove('equated');
 		}
@@ -247,13 +243,14 @@
 			el.classList.add('clickio');
 			setTimeout(function(){
 				el.classList.remove('clickio');
-			},1100);
+			}, 300);
 			
 		}
 		
 		
 		var math_op = function (operator, el) {
 			input.classList.remove('equated');
+			input.classList.remove('hasDot');
 			if (input.classList.contains('calculated')) {
 				op = operator;
 			} else {
@@ -261,7 +258,7 @@
 
 				txt = txt!==''? txt+op+scr : scr;
 
-				cur = op? eval(cur + op + scr) : scr;
+				cur = op? +eval(cur + op + scr).toFixed(10) : scr;
 
 				op = operator;
 
@@ -304,14 +301,14 @@
 			}
 			if (input.classList.contains('calculated')) {
 				input.value = '0.';
-			}else if (input.value[input.value.length-1] === '.'){
+			}else if (input.classList.contains('hasDot')){
 								return;
 			} else {
 				input.value += '.';
 			}
 			
 			input.classList.remove('calculated');
-			
+			input.classList.add('hasDot');
 			//deco CSS
 			num_decimal.classList.add('clickio');
 			setTimeout(function(){
@@ -331,13 +328,13 @@
 		//		txt = txt+op+scr;
 			txt = '';
 
-			cur = op? eval(cur + op + scr) : scr;
+			cur = op? +eval(cur + op + scr).toFixed(10) : scr;
 			input.value = cur;
 			memo.value = txt;
 		//	txt = '';
 			input.classList.add('calculated'); 
 			input.classList.add('equated');
-			
+			input.classList.remove('hasDot');
 			
 			//decoration CSS
 			eq.classList.add('effect');

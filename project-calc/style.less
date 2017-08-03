@@ -1,48 +1,118 @@
-@hover_color : coral;
-@hover_math : yellow;
+@hover_color : #FFF94B;
+@hover_math : #FFF94B;
+@backgr : #5da8ff;
 
 
 * {
 	box-sizing: border-box;
+	&::selection {
+		background: #ffb7b7; 
+	}
+	&::-moz-selection {
+		background: #ffb7b7; 
+	}
+}
+body {
+	background-color: seashell;
+}
+.title {
+	font-family:'Montserrat';
+	font-size: 34px;
+	text-align: center;
+	color: antiquewhite;
+	text-shadow: 2px 2px 2px rgba(93,168,255,.66);
+}
+.copy {
+	text-align: center;
+	margin-top: 50px;
+	color: #999;
+	
 }
 .calc-body {
 	max-width: 600px;
 	margin: 0 auto;
-	border: 1px solid red;
+	border: 1px solid rgba(255,255,255,.33);
 	position: relative;
-	background-color: lightcyan;
-	box-shadow: 3px 3px 5px blue;
+	font-family:'Montserrat';
+	background-color: @backgr;//lightcyan;
+	box-shadow: 3px 3px 9px  #5da8ff;
 }
 .calc-buttons {
 	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
+/*	align-items: center;
+	align-content: center;*/
+
+}
+
+.numbers {
+	display: flex;
+	flex-wrap: wrap;
+	flex: 0 1 auto;
+	flex-basis: 550px;
+	padding-left: 50px;
+
+}
+.math-ops {
+	padding-right: 50px;
+	flex-basis: 350px;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	padding-left: 50px;
+	justify-content: space-around;
+}
+.btn-math {
+	
+	margin: 10px;
+	width: 50px;
+	height: 50px;
+	border-radius: 4px;
+
+	&:hover {
+		background-color: @hover_math;
+	}
 	
 }
-#main-input {
-	width: 100%;
-	display: block;
-	margin: 0 auto;
-	height: 30px;
-	padding: 10px 20px 40px 20px;
 
+
+
+#main-input {
+	width: 90%;
+	display: block;
+	font-family:'Montserrat';
+	margin: 10px auto 0;
+	height: 30px;
+	letter-spacing: 1px;
+	padding: 30px 20px 40px 20px;
+	background-color: rgba(250,250,250,.77);
+	font-size: 20px;
+	border: 2px dashed grey;
 }
 .ops-tracker {
 	position: relative;
-	padding-left: 50%;
-	top: -20px;
-	border: 1px solid yellow;
+	padding-left: 4%;
+	top: -25px;
+	width: 90%;
+	margin: 0 auto;
+	label {
+		width: 32%;
+		color: gray;
+	}
 }
 #memo {
 	//position: absolute;
 	border: 0;
-
+	width: 53%;
+	background-color: transparent;
+	font-family:'Montserrat';
 
 }
 .btn {
-	display: inline-block;
 	outline: none;
-	margin: 15px;
 	border: 0;
-
+	cursor: pointer;
 }
 
 //NUMBERS
@@ -54,8 +124,8 @@
 	width: 50px;
 	height: 50px;
 	border-radius: 50%;
-	
-	font-size: 16px;
+	margin: 15px;
+	font-size: 26px;
 	font-weight: bold;
 	
 	color: transparent;	
@@ -63,18 +133,24 @@
 	&:hover {
 		background-color: @hover_color;
 	}
-
+	
 }
 .clickio {
-	color: mediumpurple;
-	transition: 1s;
-	text-shadow: 1px 1px 4px red;
+	color:  #147EB2;
+	transition: .5s;
+	text-shadow: 2px 2px 6px #FF293F ;
 }
 
-
-#num_zero {
-	width: 50px;
-	border-radius: 100px;
+#num_decimal {
+	width: 120px;
+	height: 50px;
+	margin: 15px;
+	font-size: 40px;
+	border-radius: 10px;
+	color: #555;
+	&:hover {
+		background-color: @hover_color;
+	}
 }
 
 
@@ -180,23 +256,13 @@
 
 
 
-
-
-.btn-math {
-	width: 50px;
-	height: 50px;
-	border-radius: 4px;
-}
-.btn-math:hover {
-	background-color: @hover_math;
-}
 #clear {
-	background-color: dodgerblue;
+	background-color: greenyellow;
 	font-weight: bold;
 }
 #clear.effect-clear {
-	transition: .17s;
-	background-color:rgba(255,0,0,.75);
+	transition: .27s;
+	background-color:#FF293E;
 }
 
 
@@ -232,7 +298,7 @@
 		top: 0;
 		left: 30px;
 
-		background-color:lightcyan;
+		background-color:@backgr;
 		transition: 1s;
 	}
 	
@@ -254,14 +320,14 @@
 		}
 	}
 	&.effect {
-		width: 30px;
+//		width: 30px;
 
 		transform: translateX(-10px);
 		&:before {
 			width: 20px;
 		}
 		&:after {
-			transform: translateX(40px);
+			transform: translateX(25px);
 		}
 	}
 }  //end divide btn
