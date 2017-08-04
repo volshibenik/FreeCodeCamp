@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pomodoro</title>
+</head>
+<body onload="tt()">
+	<div class="break">
+		<button class="btn btn-substract">-</button>
+		<input type="text" class="display-break">
+		<input type="text" class="display-break2">
+		<button class="btn btn-add">+</button>
+	</div>
+	<script>
+		var a = 25*60;
+		var inp = document.querySelector('.display-break');
+		var inp2 = document.querySelector('.display-break2');
+		console.log(inp);
+		
+		//setInterval(tt(a),1000);
+		
+		var kk = new Date();
+		kk.setMinutes(kk.getMinutes()+25);
+
+		
+		function tt() {
+			var d = new Date();
+			inp.value = a;
+			inp2.value = (kk-d);
+			 a = a - 1;	
+			setTimeout( tt, 1000);
+		}
+	</script>
+	
+</body>
+</html>
