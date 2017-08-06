@@ -15,21 +15,30 @@
 		var a = 25*60;
 		var inp = document.querySelector('.display-break');
 		var inp2 = document.querySelector('.display-break2');
-		console.log(inp);
+		var distance;
 		
 		//setInterval(tt(a),1000);
 		
-		var kk = new Date();
-		kk.setMinutes(kk.getMinutes()+25);
-
+		var futureDate = new Date();
+		futureDate.setMinutes(futureDate.getMinutes()+25);
+		console.log(futureDate);
 		
 		function tt() {
 			var d = new Date();
 			inp.value = a;
-			inp2.value = (kk-d);
-			 a = a - 1;	
+			distance = futureDate-d;
+			inp2.value = distance;
+			a = a - 1;	
 			setTimeout( tt, 1000);
 		}
+		
+		
+	/*	function cli() {
+			if (inp.classList.contains() 'going') {
+				inp.classList.add('paused');
+				
+			}
+		}*/
 	</script>
 	
 </body>
