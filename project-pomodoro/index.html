@@ -8,30 +8,48 @@
 	<div class="break">
 		<button class="btn btn-substract">-</button>
 		<input type="text" class="display-break">
-		<input type="text" class="display-break2">
+		<input type="text" class="display-break2" value="25">
 		<button class="btn btn-add">+</button>
+		<button class="go">go</button>
+		<button class="stop">stop</button>
+	</div>
+	<div class="container">
+		<input type="text" class="display">
 	</div>
 	<script>
 		var a = 25*60;
 		var inp = document.querySelector('.display-break');
 		var inp2 = document.querySelector('.display-break2');
+		var disp = document.querySelector('.display');
+		var go = document.querySelector('.go');
+		var stop = document.querySelector('.stop');
 		var distance;
 		
 		//setInterval(tt(a),1000);
 		
 		var futureDate = new Date();
-		futureDate.setMinutes(futureDate.getMinutes()+25);
+		
+		futureDate.setMinutes(futureDate.getMinutes()+(+inp2.value));
 		console.log(futureDate);
 		
 		function tt() {
 			var d = new Date();
 			inp.value = a;
 			distance = futureDate-d;
-			inp2.value = distance;
+			disp.value = distance;
 			a = a - 1;	
-			setTimeout( tt, 1000);
+			
 		}
+		var myTimer;
 		
+		go.addEventListener('click', function(){
+			myTimer = setInterval( tt, 1000);
+			console.log(myTimer);
+		})
+		stop.addEventListener('click', function(){
+			clearInterval(myTimer);
+			console.log(myTimer);
+		})
 		
 	/*	function cli() {
 			if (inp.classList.contains() 'going') {
