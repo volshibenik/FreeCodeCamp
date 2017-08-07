@@ -6,49 +6,68 @@
 </head>
 <body onload="tt()">
 	<div class="break">
-		<button class="btn btn-substract">-</button>
+		<button class="btn-minus">-</button>
 		<input type="text" class="display-break">
 		<input type="text" class="display-break2" value="25">
-		<button class="btn btn-add">+</button>
+		<button class="btn-plus">+</button>
 		<button class="go">go</button>
 		<button class="stop">stop</button>
 	</div>
 	<div class="container">
-		<input type="text" class="display">
+		<input type="text" class="display first-launch">
 	</div>
 	<script>
 		var a = 25*60;
+		var plus = document.querySelector('.btn-plus');
+		var minus = document.querySelector('.btn-minus');
 		var inp = document.querySelector('.display-break');
 		var inp2 = document.querySelector('.display-break2');
 		var disp = document.querySelector('.display');
 		var go = document.querySelector('.go');
 		var stop = document.querySelector('.stop');
+		
 		var distance;
+		var myTimer;
+		var memo;		
 		
-		//setInterval(tt(a),1000);
-		
-		var futureDate = new Date();
-		
-		futureDate.setMinutes(futureDate.getMinutes()+(+inp2.value));
-		console.log(futureDate);
+		var futureDate;
+			
+		function setFutureDate(ms) {
+			futureDate = new Date();
+			futureDate.setMilliseconds(futureDate.getMilliseconds() + ms);
+		}
 		
 		function tt() {
 			var d = new Date();
-			inp.value = a;
 			distance = futureDate-d;
-			disp.value = distance;
-			a = a - 1;	
-			
+			disp.value = distance/1000;
 		}
-		var myTimer;
-		
+		disp.value = inp2.value;
+		plus.addEventListener('click', function(){
+			inp2.value = +inp2.value + 1;
+			disp.value = inp2.value;
+		})
 		go.addEventListener('click', function(){
+			if (disp.classList.contains('first-launch')) {
+				setFutureDate(inp2.value*1000*60);
+			} else if (disp.classList.contains('paused')) {
+				setFutureDate(memo);
+			}
+			
+			console.log(memo, distance);
+			
 			myTimer = setInterval( tt, 1000);
 			console.log(myTimer);
+			
 		})
+		
 		stop.addEventListener('click', function(){
+			disp.classList.add('paused');
+			disp.classList.remove('first-launch');
+			memo = distance;
+			
+			console.log(memo, distance);
 			clearInterval(myTimer);
-			console.log(myTimer);
 		})
 		
 	/*	function cli() {
