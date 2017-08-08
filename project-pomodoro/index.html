@@ -10,7 +10,7 @@
 		<input type="text" class="display-break" value="5">
 		<button class="btn-plus-break">-</button>
 		<button class="btn-minus">-</button>
-		<input type="text" class="display-break2" value="25">
+		<input type="text" class="display-break2" value="1">
 		<button class="btn-plus">+</button>
 		<button class="go">go</button>
 		<button class="stop">stop</button>
@@ -43,7 +43,11 @@
 		function tt() {
 			var d = new Date();
 			distance = futureDate-d;
-			disp.value = distance/1000;
+			var mins = Math.floor(distance/(60*1000));
+			console.log(mins);
+			var secs = Math.round((distance - mins*60*1000)/1000);
+		console.log(secs);
+			disp.value = mins + ':' + secs;
 		}
 		// ??? disp.value = inp2.value;
 		
