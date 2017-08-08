@@ -6,14 +6,17 @@
 </head>
 <body onload="tt()">
 	<div class="break">
+		<button class="btn-minus-break">-</button>
+		<input type="text" class="display-break" value="5">
+		<button class="btn-plus-break">-</button>
 		<button class="btn-minus">-</button>
-		<input type="text" class="display-break">
 		<input type="text" class="display-break2" value="25">
 		<button class="btn-plus">+</button>
 		<button class="go">go</button>
 		<button class="stop">stop</button>
 	</div>
-	<div class="container">
+	<div class="display-container">
+		<span class="display-caption"></span>
 		<input type="text" class="display first-launch">
 	</div>
 	<script>
@@ -42,11 +45,30 @@
 			distance = futureDate-d;
 			disp.value = distance/1000;
 		}
-		disp.value = inp2.value;
+		// ??? disp.value = inp2.value;
+		
+		var add = function(op) {
+			if (disp.classList.contains('go-go')) {
+				return;
+			}
+			inp2.value = eval(inp2.value +op+ 1) || 1;
+			disp.value = inp2.value;
+			disp.classList.remove('paused');
+			disp.classList.add('first-launch');
+		}
+	
+		minus.addEventListener('click', function(){add('-')});
+		
 		plus.addEventListener('click', function(){
+			if (disp.classList.contains('go-go')) {
+				return;
+			}
 			inp2.value = +inp2.value + 1;
 			disp.value = inp2.value;
+			disp.classList.remove('paused');
+			disp.classList.add('first-launch');
 		})
+		
 		go.addEventListener('click', function(){
 			if (disp.classList.contains('first-launch')) {
 				setFutureDate(inp2.value*1000*60);
@@ -55,8 +77,10 @@
 			}
 			
 			console.log(memo, distance);
-			
+			disp.classList.remove('paused');
 			myTimer = setInterval( tt, 1000);
+			disp.classList.add('go-go');
+			
 			console.log(myTimer);
 			
 		})
@@ -64,6 +88,8 @@
 		stop.addEventListener('click', function(){
 			disp.classList.add('paused');
 			disp.classList.remove('first-launch');
+			disp.classList.remove('go-go');
+			
 			memo = distance;
 			
 			console.log(memo, distance);
