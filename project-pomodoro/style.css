@@ -1,0 +1,68 @@
+* {
+	box-sizing: border-box;
+}
+.btn {
+	cursor: pointer;
+}
+.input-siesta, .input-session {
+	width: 40px;
+	text-align: center;
+}
+.display-caption {
+	position: relative;
+	margin-right: 50px;
+}
+.display-caption .span-session {
+	position: absolute;
+	opacity: 1;
+	transition: 0s;
+	transition-delay: 1s;
+}
+.display-caption .span-break {
+	position: absolute;
+	opacity: 0;
+	transition: 0.01s;
+	transition-delay: 1s;
+}
+.caption-break .span-session {opacity: 0;}
+.caption-break .span-break {opacity: 1;}
+
+.break-control, .session-control {
+	margin: 10px auto;
+}
+label {
+	width: 120px;
+	display: inline-block;
+}
+.action {
+	margin-top: 15px;
+	padding: 10px 20px;
+}
+.pomodoro {
+	max-width:900px;
+	margin: 0 auto;
+	text-align: center;
+}
+.display-container {
+	width: 100px;
+	height: 100px;
+	margin: 30px auto;
+	padding-top: 20px;
+	border: 3px solid gray;
+	
+}
+.display-caption {
+	display: block;
+	height: 30px;
+}
+.display-caption span {
+	left: 50%;
+}
+.display-caption .span-break{
+	transform: translateX(7px);
+}
+.display {
+	width: 100%;
+	border: 0;
+	text-align: center;
+}

@@ -3,84 +3,112 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Pomodoro</title>
+	<link rel="stylesheet" href="style.css">
 </head>
-<body onload="tt()">
-	<div class="break">
-		<button class="btn-minus-break">-</button>
-		<input type="text" class="display-break" value="5">
-		<button class="btn-plus-break">-</button>
-		<button class="btn-minus">-</button>
-		<input type="text" class="display-break2" value="1">
-		<button class="btn-plus">+</button>
-		<button class="go">go</button>
-		<button class="stop">stop</button>
-	</div>
-	<div class="display-container">
-		<span class="display-caption"></span>
-		<input type="text" class="display first-launch">
+<body>
+	<div class="pomodoro">
+		<div class="sessions">
+			<div class="break-control">
+				<button class="btn btn-minus-break">-</button>
+				<label for="break-id">Break length:</label>
+				<input type="text" id="break-id" class="input-siesta" value="5" readonly>
+				<button class="btn btn-plus-break">+</button>
+			</div>
+			
+			<div class="session-control">
+				<button class="btn btn-minus">-</button>
+				<label for="sess-id">Session length:</label>
+				<input type="text" id="sess-id" class="input-session input-active" value="1" readonly>
+				<button class="btn btn-plus">+</button>
+			</div>
+		<!--	<button class="go">go</button>
+			<button class="stop">stop</button>-->
+			<button class="action">Click</button>
+		</div>
+		<div class="display-container">
+			<span class="display-caption">
+				<span class="span-session">Session</span>
+				<span class="span-break">Break</span>
+			</span>
+			<input type="text" class="display first-launch" readonly>
+		</div>
 	</div>
 	<script>
-		var a = 25*60;
 		var plus = document.querySelector('.btn-plus');
 		var minus = document.querySelector('.btn-minus');
-		var inp = document.querySelector('.display-break');
-		var inp2 = document.querySelector('.display-break2');
+		var plus_break = document.querySelector('.btn-plus-break');
+		var minus_break = document.querySelector('.btn-minus-break');
+		var inp_siesta = document.querySelector('.input-siesta');
+		var inp_session = document.querySelector('.input-session');
 		var disp = document.querySelector('.display');
 		var go = document.querySelector('.go');
 		var stop = document.querySelector('.stop');
+		var action_btn = document.querySelector('.action');
 		
 		var distance;
 		var myTimer;
 		var memo;		
-		
+
 		var futureDate;
 			
 		function setFutureDate(ms) {
 			futureDate = new Date();
 			futureDate.setMilliseconds(futureDate.getMilliseconds() + ms);
 		}
+		function switch_class () {
+			inp_session.classList.toggle('input-active'); inp_siesta.classList.toggle('input-active');
+			document.querySelector('.display-caption').classList.toggle('caption-break');
+		}
 		
+
 		function tt() {
 			var d = new Date();
 			distance = futureDate-d;
-			var mins = Math.floor(distance/(60*1000));
-			console.log(mins);
+			console.log(distance);
+			if (distance <= 1000)  {
+				switch_class();
+				setFutureDate(document.querySelector('.input-active').value*60*1000+1000);
+				
+			}
+			var mins = Math.floor((distance+50)/(60*1000));//+50->display 1:00 instead of 0:60
+
 			var secs = Math.round((distance - mins*60*1000)/1000);
-		console.log(secs);
+			secs < 10? secs='0'+secs : secs; 
+
 			disp.value = mins + ':' + secs;
 		}
-		// ??? disp.value = inp2.value;
+
 		
-		var add = function(op) {
+		var add = function(op, input) {
 			if (disp.classList.contains('go-go')) {
 				return;
 			}
-			inp2.value = eval(inp2.value +op+ 1) || 1;
-			disp.value = inp2.value;
-			disp.classList.remove('paused');
-			disp.classList.add('first-launch');
+			input.value = eval(input.value +op+ 1) || 1;
+			
+			if (input.classList.contains('input-active')) {
+				disp.value = input.value;
+				disp.classList.remove('paused');
+				disp.classList.add('first-launch');
+			}
+			
 		}
 	
-		minus.addEventListener('click', function(){add('-')});
+		minus.addEventListener('click', function(){add('-', inp_session)});
+		minus_break.addEventListener('click', function(){add('-', inp_siesta)});
+		plus.addEventListener('click', function(){add('+', inp_session)});
+		plus_break.addEventListener('click', function(){add('+', inp_siesta)});
 		
-		plus.addEventListener('click', function(){
-			if (disp.classList.contains('go-go')) {
-				return;
-			}
-			inp2.value = +inp2.value + 1;
-			disp.value = inp2.value;
-			disp.classList.remove('paused');
-			disp.classList.add('first-launch');
-		})
 		
-		go.addEventListener('click', function(){
+		
+
+		
+		/*go.addEventListener('click', function(){
 			if (disp.classList.contains('first-launch')) {
-				setFutureDate(inp2.value*1000*60);
+				setFutureDate(document.querySelector('.input-active').value*1000*60);
 			} else if (disp.classList.contains('paused')) {
 				setFutureDate(memo);
 			}
 			
-			console.log(memo, distance);
 			disp.classList.remove('paused');
 			myTimer = setInterval( tt, 1000);
 			disp.classList.add('go-go');
@@ -98,14 +126,30 @@
 			
 			console.log(memo, distance);
 			clearInterval(myTimer);
+		})*/
+		
+		action_btn.addEventListener('click', function(){
+			if(disp.classList.contains('go-go')) {
+				disp.classList.add('paused');
+				disp.classList.remove('first-launch');
+				disp.classList.remove('go-go');
+				memo = distance;
+				clearInterval(myTimer);
+			} else {
+				if (disp.classList.contains('first-launch')) {
+					setFutureDate(document.querySelector('.input-active').value*1000*60);
+				} else if (disp.classList.contains('paused')) {
+					setFutureDate(memo);
+				}
+
+				disp.classList.remove('paused');
+				myTimer = setInterval( tt, 1000);
+				disp.classList.add('go-go');
+			}
 		})
 		
-	/*	function cli() {
-			if (inp.classList.contains() 'going') {
-				inp.classList.add('paused');
-				
-			}
-		}*/
+		
+
 	</script>
 	
 </body>
