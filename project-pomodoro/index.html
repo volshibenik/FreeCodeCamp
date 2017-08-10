@@ -18,39 +18,39 @@
 			<div class="session-control">
 				<button class="btn btn-minus">-</button>
 				<label for="sess-id">Session length:</label>
-				<input type="text" id="sess-id" class="input-session input-active" value="1" readonly>
+				<input type="text" id="sess-id" class="input-session input-active" value="25" readonly>
 				<button class="btn btn-plus">+</button>
 			</div>
 		<!--	<button class="go">go</button>
 			<button class="stop">stop</button>-->
-			<button class="action">Click</button>
+			<button class="action">Go</button>
 		</div>
 		<div class="display-container">
 			<span class="display-caption">
 				<span class="span-session">Session</span>
 				<span class="span-break">Break</span>
 			</span>
-			<input type="text" class="display first-launch" readonly>
+			<input type="text" class="display first-launch" value="25" readonly>
 		</div>
 	</div>
 	<script>
-		var plus = document.querySelector('.btn-plus');
-		var minus = document.querySelector('.btn-minus');
-		var plus_break = document.querySelector('.btn-plus-break');
-		var minus_break = document.querySelector('.btn-minus-break');
-		var inp_siesta = document.querySelector('.input-siesta');
-		var inp_session = document.querySelector('.input-session');
-		var disp = document.querySelector('.display');
-		var go = document.querySelector('.go');
-		var stop = document.querySelector('.stop');
-		var action_btn = document.querySelector('.action');
-		
-		var distance;
-		var myTimer;
-		var memo;		
 
-		var futureDate;
-			
+		const plus = document.querySelector('.btn-plus'),
+					minus = document.querySelector('.btn-minus'),
+					plus_break = document.querySelector('.btn-plus-break'),
+					minus_break = document.querySelector('.btn-minus-break'),
+					inp_siesta = document.querySelector('.input-siesta'),
+					inp_session = document.querySelector('.input-session'),
+					disp = document.querySelector('.display'),
+					go = document.querySelector('.go'),
+					stop = document.querySelector('.stop'),
+					action_btn = document.querySelector('.action');
+
+		var distance,
+				myTimer,
+				memo,	
+				futureDate;
+
 		function setFutureDate(ms) {
 			futureDate = new Date();
 			futureDate.setMilliseconds(futureDate.getMilliseconds() + ms);
@@ -59,7 +59,7 @@
 			inp_session.classList.toggle('input-active'); inp_siesta.classList.toggle('input-active');
 			document.querySelector('.display-caption').classList.toggle('caption-break');
 		}
-		
+
 
 		function tt() {
 			var d = new Date();
@@ -68,7 +68,7 @@
 			if (distance <= 1000)  {
 				switch_class();
 				setFutureDate(document.querySelector('.input-active').value*60*1000+1000);
-				
+
 			}
 			var mins = Math.floor((distance+50)/(60*1000));//+50->display 1:00 instead of 0:60
 
@@ -78,56 +78,27 @@
 			disp.value = mins + ':' + secs;
 		}
 
-		
+
 		var add = function(op, input) {
 			if (disp.classList.contains('go-go')) {
 				return;
 			}
 			input.value = eval(input.value +op+ 1) || 1;
-			
+
 			if (input.classList.contains('input-active')) {
 				disp.value = input.value;
 				disp.classList.remove('paused');
 				disp.classList.add('first-launch');
 			}
-			
+
 		}
-	
+
 		minus.addEventListener('click', function(){add('-', inp_session)});
 		minus_break.addEventListener('click', function(){add('-', inp_siesta)});
 		plus.addEventListener('click', function(){add('+', inp_session)});
 		plus_break.addEventListener('click', function(){add('+', inp_siesta)});
-		
-		
-		
 
-		
-		/*go.addEventListener('click', function(){
-			if (disp.classList.contains('first-launch')) {
-				setFutureDate(document.querySelector('.input-active').value*1000*60);
-			} else if (disp.classList.contains('paused')) {
-				setFutureDate(memo);
-			}
-			
-			disp.classList.remove('paused');
-			myTimer = setInterval( tt, 1000);
-			disp.classList.add('go-go');
-			
-			console.log(myTimer);
-			
-		})
-		
-		stop.addEventListener('click', function(){
-			disp.classList.add('paused');
-			disp.classList.remove('first-launch');
-			disp.classList.remove('go-go');
-			
-			memo = distance;
-			
-			console.log(memo, distance);
-			clearInterval(myTimer);
-		})*/
-		
+
 		action_btn.addEventListener('click', function(){
 			if(disp.classList.contains('go-go')) {
 				disp.classList.add('paused');
@@ -135,6 +106,7 @@
 				disp.classList.remove('go-go');
 				memo = distance;
 				clearInterval(myTimer);
+				action_btn.innerHTML = 'Go';
 			} else {
 				if (disp.classList.contains('first-launch')) {
 					setFutureDate(document.querySelector('.input-active').value*1000*60);
@@ -145,9 +117,11 @@
 				disp.classList.remove('paused');
 				myTimer = setInterval( tt, 1000);
 				disp.classList.add('go-go');
+				action_btn.innerHTML = 'Stop';
 			}
 		})
-		
+
+
 		
 
 	</script>
