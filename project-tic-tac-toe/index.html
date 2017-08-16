@@ -29,12 +29,32 @@
 					el6 = document.querySelector('.square-6'),
 					el7 = document.querySelector('.square-7'),
 					el8 = document.querySelector('.square-8'),
-					el9 = document.querySelector('.square-9');
+					el9 = document.querySelector('.square-9'),
+					win_sequence = [[el1,el2,el3],
+													[el4,el5,el6],
+													[el7,el8,el9],
+													[el1,el4,el7],
+													[el2,el5,el8],
+													[el3,el6,el9],
+													[el1,el5,el9],
+													[el9,el5,el7]];
+		
+		function check_win() {
+			for (var i = 0; i < win_sequence.length-1; i++) {
+				
+			}
+		}
+		var kk =win_sequence[1][1]; 
+		var t = kk.classList.contains('kka');
+		console.log(kk, t);
 		
 		function solution () {
 			if (el1)
 			el2.classList.add('zero')
 		}
+		
+		
+		
 		
 		
 		el1.addEventListener('click', function(){
