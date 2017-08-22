@@ -21,6 +21,11 @@
 	
 	
 	<script>
+		var classHuman = 'cross',
+				classAI = 'zero';
+		
+		
+		
 		var el = document.getElementsByClassName('square');
 		const el1 = document.querySelector('.square-1'),
 					el2 = document.querySelector('.square-2'),
@@ -40,23 +45,26 @@
 													[el1,el5,el9],
 													[el3,el5,el7]];
 		
+		var turnN = 0;
+		
+		
 		function check_win(sideClass) {
 			for (var i = 0; i < 8; i++) {
 				if (win_sequence[i][0].classList.contains(sideClass) && 
 						win_sequence[i][1].classList.contains(sideClass)&&
-						!win_sequence[i][2].classList.contains('zero')
+						!win_sequence[i][2].classList.contains(classAI)
 					 ) {
 					return win_sequence[i][2];
 				}
 				if (win_sequence[i][1].classList.contains(sideClass) && 
 						win_sequence[i][2].classList.contains(sideClass)&&
-						!win_sequence[i][0].classList.contains('zero')
+						!win_sequence[i][0].classList.contains(classAI)
 					) {
 					return win_sequence[i][0];
 				}
 				if (win_sequence[i][0].classList.contains(sideClass) && 
 						win_sequence[i][2].classList.contains(sideClass)&&
-						!win_sequence[i][1].classList.contains('zero')
+						!win_sequence[i][1].classList.contains(classAI)
 					 ) {
 					return win_sequence[i][1];
 				}
@@ -64,10 +72,23 @@
 		}
 		
 		function AI_move() {
-			var side = check_win('cross');
-			if (side) side.classList.add('zero') ;
+			var side = check_win(classHuman);
+			if (side) side.classList.add(classAI) ;
 		}
 		
+		function AI_alg() {
+			turnN +=1;
+			if (turnN === 1) {
+				if (el5.classList.contains(classHuman)) {
+					el1.classList.add(classAI);
+				} else if (el1.classList.contains(classHuman) ||
+									 el3.classList.contains(classHuman) ||
+									 el7.classList.contains(classHuman) ||
+									 el9.classList.contains(classHuman)) {
+					el5.classList.add(classAI);
+				} 
+			} else AI_move()
+		}
 
 
 		for (var i = 0; i < el.length; i++) {
@@ -75,9 +96,9 @@
 				var attribute = this.getAttribute("class");
 		//		alert(attribute);
 				
-				this.classList.add('cross');
+				this.classList.add(classHuman);
 				
-				AI_move();
+				AI_alg();
 			});
 		}
 		
