@@ -76,9 +76,10 @@
 		
 		function AI_move() {
 			var winMove = check_win(classAI);
-			if (winMove) winMove.classList.add(classAI);
 			var counterMove = check_win(classHuman);
-			if (counterMove) counterMove.classList.add(classAI) ;
+			if (winMove) winMove.classList.add(classAI);
+			
+			else if (counterMove) counterMove.classList.add(classAI) ;
 		}
 		
 		function AI_alg() {
@@ -92,7 +93,12 @@
 									 el9.classList.contains(classHuman)) {
 					el5.classList.add(classAI);
 				} 
-			} else AI_move()
+			} else if (turnN === 2) {
+				
+				
+				
+			}//end turn 2
+			else AI_move()
 		}
 
 
