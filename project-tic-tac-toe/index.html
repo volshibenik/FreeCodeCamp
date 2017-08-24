@@ -52,19 +52,22 @@
 			for (var i = 0; i < 8; i++) {
 				if (win_sequence[i][0].classList.contains(sideClass) && 
 						win_sequence[i][1].classList.contains(sideClass)&&
-						!win_sequence[i][2].classList.contains(classAI)
+						(!win_sequence[i][2].classList.contains(classAI)||
+						 !win_sequence[i][2].classList.contains(classHuman))
 					 ) {
 					return win_sequence[i][2];
 				}
 				if (win_sequence[i][1].classList.contains(sideClass) && 
 						win_sequence[i][2].classList.contains(sideClass)&&
-						!win_sequence[i][0].classList.contains(classAI)
+						(!win_sequence[i][0].classList.contains(classAI)||
+						 !win_sequence[i][2].classList.contains(classHuman))
 					) {
 					return win_sequence[i][0];
 				}
 				if (win_sequence[i][0].classList.contains(sideClass) && 
 						win_sequence[i][2].classList.contains(sideClass)&&
-						!win_sequence[i][1].classList.contains(classAI)
+						(!win_sequence[i][1].classList.contains(classAI)||
+						 !win_sequence[i][2].classList.contains(classHuman))
 					 ) {
 					return win_sequence[i][1];
 				}
@@ -72,8 +75,10 @@
 		}
 		
 		function AI_move() {
-			var side = check_win(classHuman);
-			if (side) side.classList.add(classAI) ;
+			var winMove = check_win(classAI);
+			if (winMove) winMove.classList.add(classAI);
+			var counterMove = check_win(classHuman);
+			if (counterMove) counterMove.classList.add(classAI) ;
 		}
 		
 		function AI_alg() {
@@ -102,21 +107,8 @@
 			});
 		}
 		
-		/*var kk =win_sequence[1][1]; 
-		var t = kk.classList.contains('kka');
-		console.log(kk, t);*/
-		
-
-	
-		
-		el1.addEventListener('click', function(){
-			this.classList.add('cross');
 
 
-			
-			check_win('zero')? check_win('zero').classList.add('cross') : null;
-
-		})
 	</script>
 	
 </body>
