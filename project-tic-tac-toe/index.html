@@ -7,6 +7,7 @@
 </head>
 <body>
 	<div class="container">
+		<div class="square square-0"></div>
 		<div class="square square-1"></div>
 		<div class="square square-2"></div>
 		<div class="square square-3"></div>
@@ -15,7 +16,6 @@
 		<div class="square square-6"></div>
 		<div class="square square-7"></div>
 		<div class="square square-8"></div>
-		<div class="square square-9"></div>
 	</div>
 	
 	
@@ -27,15 +27,15 @@
 		
 		
 		var el = document.getElementsByClassName('square');
-		const el1 = document.querySelector('.square-1'),
-					el2 = document.querySelector('.square-2'),
-					el3 = document.querySelector('.square-3'),
-					el4 = document.querySelector('.square-4'),
-					el5 = document.querySelector('.square-5'),
-					el6 = document.querySelector('.square-6'),
-					el7 = document.querySelector('.square-7'),
-					el8 = document.querySelector('.square-8'),
-					el9 = document.querySelector('.square-9'),
+		const el1 = document.querySelector('.square-0'),
+					el2 = document.querySelector('.square-1'),
+					el3 = document.querySelector('.square-2'),
+					el4 = document.querySelector('.square-3'),
+					el5 = document.querySelector('.square-4'),
+					el6 = document.querySelector('.square-5'),
+					el7 = document.querySelector('.square-6'),
+					el8 = document.querySelector('.square-7'),
+					el9 = document.querySelector('.square-8'),
 					win_sequence = [[el1,el2,el3],
 													[el4,el5,el6],
 													[el7,el8,el9],
@@ -48,7 +48,7 @@
 		var turnN = 0;
 		
 		
-		function check_win(sideClass) {
+		/*function check_win(sideClass) {
 			for (var i = 0; i < 8; i++) {
 				if (win_sequence[i][0].classList.contains(sideClass) && 
 						win_sequence[i][1].classList.contains(sideClass)&&
@@ -72,17 +72,17 @@
 					return win_sequence[i][1];
 				}
 			}
-		}
+		}*/
 		
-		function AI_move() {
+		/*function AI_move() {
 			var winMove = check_win(classAI);
 			var counterMove = check_win(classHuman);
 			if (winMove) winMove.classList.add(classAI);
 			
 			else if (counterMove) counterMove.classList.add(classAI) ;
-		}
+		}*/
 		
-		function AI_alg() {
+		/*function AI_alg() {
 			turnN +=1;
 			if (turnN === 1) {
 				if (el5.classList.contains(classHuman)) {
@@ -100,7 +100,7 @@
 				//https://medium.freecodecamp.org/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37
 			}//end turn 2
 			else AI_move()
-		}
+		}*/
 
 
 		for (var i = 0; i < el.length; i++) {
@@ -109,13 +109,161 @@
 		//		alert(attribute);
 				
 				this.classList.add(classHuman);
+				console.log(this);
+				transformBoard(this, 'x');
 				
-				AI_alg();
+				var kkk = minimax(currentBoard, AI).index;
+				console.log(kkk);
+				transformBoard2(kkk,'o');
+
 			});
 		}
 		
+		function transformBoard (element, player){
+			
+			var nnn = element.className.toString().match(/[0-9]/);
+			
+			console.log(nnn[0]);
+			console.log(currentBoard);
+			currentBoard[nnn[0]] = player;
+			console.log(currentBoard);
+			
+			
+		}
+		function transformBoard2 (element, player){
+			
+			
 
 
+			currentBoard[element] = player;
+			console.log(currentBoard);
+			
+			
+		}
+
+
+	</script>
+	
+	
+	<!--MINIMAX-->
+	
+	
+	<script>
+		var human = 'x';
+		var AI = 'o';
+/*		var currentBoard = ['o', 1, 'x',
+										 		'o', 4, 'o',
+										 			6, 'x', 'x'];*/
+		var currentBoard = [0, 1, 2,
+										 		3, 4, 5,
+										 			6, 7, 8];
+		
+		
+		function checkEmpty (board) {
+			return board.filter(function(e){
+				if (e!='o' && e!='x')
+				return e;
+			}) 
+		}
+
+		function winning(board, player){
+			if (
+				(board[0] == player && board[1] == player && board[2] == player) ||
+				(board[3] == player && board[4] == player && board[5] == player) ||
+				(board[6] == player && board[7] == player && board[8] == player) ||
+				(board[0] == player && board[3] == player && board[6] == player) ||
+				(board[1] == player && board[4] == player && board[7] == player) ||
+				(board[2] == player && board[5] == player && board[8] == player) ||
+				(board[0] == player && board[4] == player && board[8] == player) ||
+				(board[2] == player && board[4] == player && board[6] == player)
+			) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		function minimax(newBoard, player) {
+			
+			var availableSpots = checkEmpty(newBoard);
+			
+			if (winning(newBoard, human)) {
+				
+				return {score:-10}
+				
+			}else if (winning(newBoard, AI)) {
+				
+				return {score:10}
+				
+			}else if (availableSpots.length===0) {
+				
+				return {score:0}
+				
+			}
+			
+			var moves = [];
+			
+			
+			for (var i = 0; i < availableSpots.length; i++) {
+				//create an object for each and store the index of that spot 
+				var move = {};
+				move.index = newBoard[availableSpots[i]];
+				// set the empty spot to the current player
+				newBoard[availableSpots[i]] = player;
+				
+				/*collect the score resulted from calling minimax 
+      on the opponent of the current player*/
+				if (player == AI) {
+					
+					var result = minimax(newBoard, human);
+					move.score = result.score;
+					
+				}else {
+					
+					var result = minimax(newBoard, AI);
+					move.score = result.score;
+					
+				}
+				//reset the spot to empty
+				newBoard[availableSpots[i]] = move.index;
+				console.log('move',move);
+				moves.push(move);
+			}
+
+			
+			// if it is the computer's turn loop over the moves and choose the move with the highest score
+			var bestMove;
+			if(player === AI){
+				var bestScore = -10000;
+				for(var i = 0; i < moves.length; i++){
+					if(moves[i].score > bestScore){
+						bestScore = moves[i].score;
+						bestMove = i;
+					}
+				}
+			}else{
+				
+				// else loop over the moves and choose the move with the lowest score
+				var bestScore = 10000;
+				for(var i = 0; i < moves.length; i++){
+					if(moves[i].score < bestScore){
+						bestScore = moves[i].score;
+						bestMove = i;
+					}
+				}
+			}
+			
+			// return the chosen move (object) from the moves array
+	//		console.log(moves[bestMove]);
+			return moves[bestMove];
+			
+}
+			
+			
+			
+
+		
+		
 	</script>
 	
 </body>
