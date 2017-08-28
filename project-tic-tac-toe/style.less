@@ -1,5 +1,13 @@
+body {
+	background-color: rgba(240,200,100,.3);
+}
+.container {
+	max-width: 900px;
+	margin: 50px auto;
+}
 .board-container {
 	width: 140px;
+	margin: 0 auto;
 	&.css-no-click {
 		pointer-events: none;
 	}
@@ -9,13 +17,74 @@
 	width: 30%;
 	height: 40px;
 	border: 1px solid #ccc;
+	border-radius: 5px;
 	&:hover {
-		border-color: blueviolet;
+		border-color: coral;
 	}
 	&.zero {
-		background: #ccc;
+		background: url(circle.png) center no-repeat;
+		background-size: 30px 30px ;
 	}
 	&.cross {
-		background: #1c1;
+		background: url(cross.png) center no-repeat;
+		background-size: 30px 30px ;
 	}
 }
+
+.buttons-container {
+	text-align: center;
+	margin-top: 50px;
+}
+.btn-side {
+	padding: 22px;
+	margin: 10px 20px;
+	cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px #ddd inset, 0 1px 1px #fff;
+	border: 0;
+	&:hover {
+  	box-shadow: 0 0 0 1px #aaa inset, 0 1px 1px #aaa;
+		&:disabled {
+			box-shadow: 0 0 0 1px #ddd inset, 0 1px 1px #fff;
+		}
+	}
+	&:active {
+		background: none;
+    box-shadow: 0 0 0 1px #bbb inset, 0 1px 3px rgba(0,0,0,.5) inset, 0 1px 2px #fff;
+	}
+}
+
+.btn-cross {
+	background: url(cross.png) center no-repeat ;
+	background-size: 25px 35px ;
+}
+.btn-zero {
+	background: url(circle.png) center no-repeat ;
+	background-size: 25px 25px ;
+}
+.result-container {
+	text-align: center;
+	margin-top: 50px;
+	color: #666;
+	font-size: 1.2rem;
+	font-family: Tahoma;;
+}
+.result {
+	height: 40px;
+}
+
+.helps {
+	.span-begin {
+		display: none;
+	}
+	&.helps-begin {
+		.span-begin {
+			display: block;
+		}
+		.span-ingame {
+			display: none;
+		}
+	}
+}
+

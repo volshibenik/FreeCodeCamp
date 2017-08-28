@@ -6,20 +6,29 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="board-container css-no-click">
-		<div class="square square-0"></div>
-		<div class="square square-1"></div>
-		<div class="square square-2"></div>
-		<div class="square square-3"></div>
-		<div class="square square-4"></div>
-		<div class="square square-5"></div>
-		<div class="square square-6"></div>
-		<div class="square square-7"></div>
-		<div class="square square-8"></div>
-	</div>
-	<div class="buttons-container">
-		<button class="btn-side btn-cross">X</button>
-		<button class="btn-side btn-zero">0</button>
+	<div class="container">
+		<div class="board-container css-no-click">
+			<div class="square square-0"></div>
+			<div class="square square-1"></div>
+			<div class="square square-2"></div>
+			<div class="square square-3"></div>
+			<div class="square square-4"></div>
+			<div class="square square-5"></div>
+			<div class="square square-6"></div>
+			<div class="square square-7"></div>
+			<div class="square square-8"></div>
+		</div>
+		<div class="buttons-container">
+			<button class="btn-side btn-cross"></button>
+			<button class="btn-side btn-zero"></button>
+		</div>
+		<div class="result-container">
+			<p class="result"></p>
+			<p class="helps helps-begin">
+				<span class="span-begin">Choose your side to start a new game. X goes first.</span>
+				<span class="span-ingame">Game is going. Make a move.</span>
+			</p>
+		</div>
 	</div>
 	
 	
@@ -139,7 +148,11 @@
 		 			el = document.getElementsByClassName('square'),
 		 			btns = document.getElementsByClassName('btn-side');
 		
-		var AI, human;
+		var result = document.querySelector('.result'),
+				helps = document.querySelector('.helps');
+		
+		var		AI, 
+				human;
 		
 		
 		for (var i = 0; i < 2; i++) {
@@ -152,6 +165,10 @@
 					AI = 'cross';
 				}
 				restartBoard();
+				result.innerHTML = '';
+				helps.classList.remove('helps-begin');
+				console.log(helps);
+
 				btns[0].disabled = true;
 				btns[1].disabled = true;
 				mainAction();
@@ -159,7 +176,7 @@
 		}
 		
 		function restartBoard() {
-			document.querySelector('.board-container').innerHTML = contents;
+			container.innerHTML = contents;
 			container.classList.remove('css-no-click');
 		}
 		
@@ -215,18 +232,22 @@
 						el[AIMove].classList.add(AI)
 						
 						console.log('Sorry, computer won');
+						result.innerHTML = 'Sorry, computer won(';
+						helps.classList.add('helps-begin');
 						restartButtons();	
 
 						
 					} else if (!checkEmpty(currentBoard).length) {
 						
 						console.log('draw');
+						result.innerHTML = 'A game ended in a draw!';
+						helps.classList.add('helps-begin');
 						restartButtons();
 						
 					}
 
 					else if (winning(currentBoard, human)) {
-						alert('Congratz! But that\'s unreal');
+						alert('Congratz! But that\'s unreal! Anyway, refresh page, please');
 					}
 				});
 			}
