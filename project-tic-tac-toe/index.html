@@ -6,7 +6,7 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="container">
+	<div class="board-container css-no-click">
 		<div class="square square-0"></div>
 		<div class="square square-1"></div>
 		<div class="square square-2"></div>
@@ -17,152 +17,21 @@
 		<div class="square square-7"></div>
 		<div class="square square-8"></div>
 	</div>
+	<div class="buttons-container">
+		<button class="btn-side btn-cross">X</button>
+		<button class="btn-side btn-zero">0</button>
+	</div>
 	
 	
 	
+	<!--MINIMAX script-->
 	<script>
-		var classHuman = 'cross',
-				classAI = 'zero';
-		
-		
-		
-		var el = document.getElementsByClassName('square');
-		const el1 = document.querySelector('.square-0'),
-					el2 = document.querySelector('.square-1'),
-					el3 = document.querySelector('.square-2'),
-					el4 = document.querySelector('.square-3'),
-					el5 = document.querySelector('.square-4'),
-					el6 = document.querySelector('.square-5'),
-					el7 = document.querySelector('.square-6'),
-					el8 = document.querySelector('.square-7'),
-					el9 = document.querySelector('.square-8'),
-					win_sequence = [[el1,el2,el3],
-													[el4,el5,el6],
-													[el7,el8,el9],
-													[el1,el4,el7],
-													[el2,el5,el8],
-													[el3,el6,el9],
-													[el1,el5,el9],
-													[el3,el5,el7]];
-		
-		var turnN = 0;
-		
-		
-		/*function check_win(sideClass) {
-			for (var i = 0; i < 8; i++) {
-				if (win_sequence[i][0].classList.contains(sideClass) && 
-						win_sequence[i][1].classList.contains(sideClass)&&
-						(!win_sequence[i][2].classList.contains(classAI)||
-						 !win_sequence[i][2].classList.contains(classHuman))
-					 ) {
-					return win_sequence[i][2];
-				}
-				if (win_sequence[i][1].classList.contains(sideClass) && 
-						win_sequence[i][2].classList.contains(sideClass)&&
-						(!win_sequence[i][0].classList.contains(classAI)||
-						 !win_sequence[i][2].classList.contains(classHuman))
-					) {
-					return win_sequence[i][0];
-				}
-				if (win_sequence[i][0].classList.contains(sideClass) && 
-						win_sequence[i][2].classList.contains(sideClass)&&
-						(!win_sequence[i][1].classList.contains(classAI)||
-						 !win_sequence[i][2].classList.contains(classHuman))
-					 ) {
-					return win_sequence[i][1];
-				}
-			}
-		}*/
-		
-		/*function AI_move() {
-			var winMove = check_win(classAI);
-			var counterMove = check_win(classHuman);
-			if (winMove) winMove.classList.add(classAI);
-			
-			else if (counterMove) counterMove.classList.add(classAI) ;
-		}*/
-		
-		/*function AI_alg() {
-			turnN +=1;
-			if (turnN === 1) {
-				if (el5.classList.contains(classHuman)) {
-					el1.classList.add(classAI);
-				} else if (el1.classList.contains(classHuman) ||
-									 el3.classList.contains(classHuman) ||
-									 el7.classList.contains(classHuman) ||
-									 el9.classList.contains(classHuman)) {
-					el5.classList.add(classAI);
-				} 
-			} else if (turnN === 2) {
-				
-				
-				//http://www.wikihow.com/Win-at-Tic-Tac-Toe
-				//https://medium.freecodecamp.org/how-to-make-your-tic-tac-toe-game-unbeatable-by-using-the-minimax-algorithm-9d690bad4b37
-			}//end turn 2
-			else AI_move()
-		}*/
 
 
-		for (var i = 0; i < el.length; i++) {
-			el[i].addEventListener('click', function(){
-				var attribute = this.getAttribute("class");
-		//		alert(attribute);
-				
-				this.classList.add(classHuman);
-				console.log(this);
-				transformBoard(this, 'x');
-				
-				var kkk = minimax(currentBoard, AI).index;
-				console.log(kkk);
-				transformBoard2(kkk,'o');
-
-			});
-		}
-		
-		function transformBoard (element, player){
-			
-			var nnn = element.className.toString().match(/[0-9]/);
-			
-			console.log(nnn[0]);
-			console.log(currentBoard);
-			currentBoard[nnn[0]] = player;
-			console.log(currentBoard);
-			
-			
-		}
-		function transformBoard2 (element, player){
-			
-			
-
-
-			currentBoard[element] = player;
-			console.log(currentBoard);
-			
-			
-		}
-
-
-	</script>
-	
-	
-	<!--MINIMAX-->
-	
-	
-	<script>
-		var human = 'x';
-		var AI = 'o';
-/*		var currentBoard = ['o', 1, 'x',
-										 		'o', 4, 'o',
-										 			6, 'x', 'x'];*/
-		var currentBoard = [0, 1, 2,
-										 		3, 4, 5,
-										 			6, 7, 8];
-		
-		
 		function checkEmpty (board) {
 			return board.filter(function(e){
-				if (e!=='o' && e!=='x')
-				return e;
+				//	if (e!=='o' && e!=='x') return e  !very important bad, bc this skips zero
+				return e!==human && e!== AI;
 			}) 
 		}
 
@@ -182,55 +51,55 @@
 				return false;
 			}
 		}
-		
+
 		function minimax(newBoard, player) {
-			
+
 			var availableSpots = checkEmpty(newBoard);
-			console.log('ava',availableSpots);
+		
 			if (winning(newBoard, human)) {
-				
+
 				return {score:-10}
-				
+
 			}else if (winning(newBoard, AI)) {
-				
+
 				return {score:10}
-				
+
 			}else if (availableSpots.length===0) {
-				
+
 				return {score:0}
-				
+
 			}
-			
+
 			var moves = [];
-			
-			
+
+
 			for (var i = 0; i < availableSpots.length; i++) {
 				//create an object for each and store the index of that spot 
 				var move = {};
 				move.index = newBoard[availableSpots[i]];
 				// set the empty spot to the current player
 				newBoard[availableSpots[i]] = player;
-				
+
 				/*collect the score resulted from calling minimax 
       on the opponent of the current player*/
 				if (player == AI) {
-					
+
 					var result = minimax(newBoard, human);
 					move.score = result.score;
-					
+
 				}else {
-					
+
 					var result = minimax(newBoard, AI);
 					move.score = result.score;
-					
+
 				}
 				//reset the spot to empty
 				newBoard[availableSpots[i]] = move.index;
-				console.log('move',move);
+				//	console.log('move',move);
 				moves.push(move);
 			}
 
-			
+
 			// if it is the computer's turn loop over the moves and choose the move with the highest score
 			var bestMove;
 			if(player === AI){
@@ -242,7 +111,7 @@
 					}
 				}
 			}else{
-				
+
 				// else loop over the moves and choose the move with the lowest score
 				var bestScore = 10000;
 				for(var i = 0; i < moves.length; i++){
@@ -252,19 +121,132 @@
 					}
 				}
 			}
-			
-			// return the chosen move (object) from the moves array
-	//		console.log(moves[bestMove]);
-			return moves[bestMove];
-			
-}
-			
-			
-			
 
-		
-		
+			// return the chosen move (object) from the moves array
+			return moves[bestMove];
+
+		}
+
 	</script>
 	
+	
+	
+	<script>
+		
+		
+		const contents = document.querySelector('.board-container').innerHTML,
+		 			container = document.querySelector('.board-container'),
+		 			el = document.getElementsByClassName('square'),
+		 			btns = document.getElementsByClassName('btn-side');
+		
+		var AI, human;
+		
+		
+		for (var i = 0; i < 2; i++) {
+			btns[i].addEventListener('click', function(){
+				if (this === btns[0]) {
+					human = 'cross';
+					AI = 'zero';
+				} else {
+					human = 'zero';
+					AI = 'cross';
+				}
+				restartBoard();
+				btns[0].disabled = true;
+				btns[1].disabled = true;
+				mainAction();
+			});
+		}
+		
+		function restartBoard() {
+			document.querySelector('.board-container').innerHTML = contents;
+			container.classList.remove('css-no-click');
+		}
+		
+		function mainAction() {
+			var turnN = 0,
+					currentBoard = [0, 1, 2,
+													3, 4, 5,
+													6, 7, 8];
+
+			var AIMove;
+			//if AI starts - go yolo turn1!
+			if (AI === 'cross' && turnN === 0) {
+
+				turnN+=1;
+				//default:
+				//AIMove = minimax(currentBoard, AI).index;  
+				//minimax AI always go to 1st node - boring, will hardcode differently:
+
+				AIMove = [0,2,4,6,8][Math.floor(5*Math.random())];
+
+				el[AIMove].classList.add(AI);
+				transformBoard(AIMove,AI);
+			}
+
+
+
+			for (var i = 0; i < el.length; i++) {
+				el[i].addEventListener('click', function(){
+					turnN+=1;
+					this.classList.add(human);
+
+					var num = /[0-9]/.exec(this.className);
+
+					transformBoard(num, human);
+
+					//if turn1 and human goes center go in a random corner to spice things 
+
+					if (turnN === 1 && num[0] === '4') {
+						AIMove = [0,2,6,8][Math.floor(4*Math.random())];
+					} 
+					//default
+					else 	
+						AIMove = minimax(currentBoard, AI).index;
+
+					console.log('ind',AIMove);
+
+					el[AIMove]? el[AIMove].classList.add(AI) : null ;
+					transformBoard(AIMove,AI);
+					
+					console.log(checkEmpty(currentBoard));
+					
+					if (winning(currentBoard, AI)) {
+						el[AIMove].classList.add(AI)
+						
+						console.log('Sorry, computer won');
+						restartButtons();	
+
+						
+					} else if (!checkEmpty(currentBoard).length) {
+						
+						console.log('draw');
+						restartButtons();
+						
+					}
+
+					else if (winning(currentBoard, human)) {
+						alert('Congratz! But that\'s unreal');
+					}
+				});
+			}
+
+
+			function transformBoard (elNum, player){
+
+				currentBoard[elNum] = player;
+				console.log(currentBoard);
+
+			}
+
+			function restartButtons() {
+				container.classList.add('css-no-click');
+				btns[0].disabled = false;
+				btns[1].disabled = false;
+			}
+			
+		}
+		
+	</script>
 </body>
 </html>
