@@ -161,7 +161,7 @@
 		
 		function checkEmpty (board) {
 			return board.filter(function(e){
-				if (e!='o' && e!='x')
+				if (e!=='o' && e!=='x')
 				return e;
 			}) 
 		}
@@ -186,7 +186,7 @@
 		function minimax(newBoard, player) {
 			
 			var availableSpots = checkEmpty(newBoard);
-			
+			console.log('ava',availableSpots);
 			if (winning(newBoard, human)) {
 				
 				return {score:-10}
