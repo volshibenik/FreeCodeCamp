@@ -6,14 +6,14 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="cube"></div>
-	<div class="cube"></div>
-	<div class="cube"></div>
-	<div class="cube"></div>
+	<div class="cube cube-0"></div>
+	<div class="cube cube-1"></div>
+	<div class="cube cube-2"></div>
+	<div class="cube cube-3"></div>
 	<script>
-		const cubes = document.getElementsByClassName('cube');
-		arr = [0,2,1,3];
-		
+		const cubes = document.querySelectorAll('.cube');
+		var sequence = [1,2,0,3,1,1];
+	
 		function simon_sequence(array) {
 			for(var i = 0; i < array.length; i++) {
 				
@@ -22,117 +22,97 @@
 			}
 		}
 		
-		function play(num) {
-			cubes[num].innerHTML = 'lll';
-			console.log('as');
+		function removeTransition() {
+    	this.classList.remove('playing'); 
+    }
+		
+		cubes.forEach(function(cube){
+			return cube.addEventListener('transitionend', removeTransition);
+		});
+		
+		cubes.forEach(function(cube){
+			return cube.addEventListener('click', playerClicks)
+		});
+		
+		
+		var clickN = 0;  //not here
+		var targetNode;
+		
+		function playerClicks(){
+			
+			targetNode = /[0-9]/.exec(this.className);
+			
+			if (targetNode != sequence[clickN]) {
+				console.log('error');
+			} else {console.log('gut!');}
+			clickN+=1;
+			if (clickN > sequence.length) {
+				// push another and relaunch runIter
+			}
 		}
-		simon_sequence(arr);
+		
+		function randomCube(){
+			return math.floor(Math.random()*4);
+		}
+		
+		//https://stackoverflow.com/questions/24293376/javascript-for-loop-with-timeout
+		
+		function runIteration(fn, numTimes, delay) {
+			var cnt = 0;
+			function next() {
+				fn(cnt)
+				cnt++;
+				if (cnt < numTimes) {
+					setTimeout(next, delay);
+				} else console.log('fin!');
+			}
+			// start first iteration
+			setTimeout(next, 1000);
+		}
+		
+		runIteration(function(j) {
+			play(sequence[j]);
+		}, sequence.length, 1000);
+		
+		
+		function play(num) {
+			cubes[num].classList.add('playing');
+		}
 		
 		window.addEventListener('keydown', function(e){
 			console.log(e.keyCode);
 		})
 		
-		//both below work
+		//two functions below work too
 		
-		/////
-		function doScaledTimeout(i) {
+		///// 1
+/*		function doScaledTimeout(i) {
 			setTimeout(function() {
-				play(arr[i]);
+				play(sequence[i]);
 				console.log(i);
 			}, i * 2000);
 		}
 		
 		for (var i = 0; i <= 3; ++i)
 			doScaledTimeout(i);
-		/////
+			*/
+		
+		
+		///// 2
 		
 		
 		
 	/*	(function fn(n) {
 			console.log(n);
 			if (n < arr.length) setTimeout(function() {
-				play(arr[n]);
+				play(sequence[n]);
 				fn(++n);
 			}, 1000);
 		}(0));
 		*/
 		
 		
-		//https://stackoverflow.com/questions/24293376/javascript-for-loop-with-timeout
-		/*
-		You can approach your situation in two ways.
-
-You can immedately schedule a whole bunch of setTimeout() calls with varying times so they will execute at the desired times in the future (other answers here illustrate how to do that).
-You can execute the first iteration, schedule the next iteration and have the execution of the next iteration schedule the one after that until you've finished the desired number of iterations. This is ultimately a bit more scalable than setting a lot of setTimeout() call and gives you more branching/logic freedom because you are in control of what happens next after each iteration.
-This second option using a more general purpose utility function would look like this:
-
-// utility function to call a callback numTimes, 
-// separated by delay milliseconds
-function runIteration(fn, numTimes, delay) {
-    var cnt = 0;
-    function next() {
-        // call the callback and stop iterating if it returns false
-        if (fn(cnt) === false) return;
-        ++cnt;
-        // if not finished with desired number of iterations,
-        // schedule the next iteration
-        if (cnt < numTimes) {
-            setTimeout(next, delay);
-        }
-    }
-    // start first iteration
-    next();
-
-}
-So, to execute your console statement, you'd do this:
-
-runIteration(function(i) {
-    console.log(i);
-}, 10, 1000);
-Working demo: http://jsfiddle.net/jfriend00/HqCZ3/
-
-This could also be extended with a 2nd callback function that was called when the iteration was complete (useful in some circumstances) or it could return a promise that is resolved when the iterations are complete.
-
-Here's what a version that returns a promise would look like: http://jsfiddle.net/jfriend00/XtJ69/
-
-// utility function to call a callback numTimes, 
-// separated by delay milliseconds
-function runIteration(fn, numTimes, delay) {
-    var d = $.Deferred();
-    var cnt = 0;
-
-    function end() {
-        d.resolve();
-    }
-
-    function next() {
-        // call the callback and stop iterating if
-        // it returns false
-        if (fn(cnt) === false) {
-            end();
-            return;
-        }
-        ++cnt;
-        // if not finished with desired number of iterations,
-        // schedule the next iteration
-        if (cnt < numTimes) {
-            setTimeout(next, delay);
-        } else {
-            end();
-        }
-    }
-    // start first iteration
-    next();
-    return d.promise();
-}
-
-
-runIteration(function(i) {
-    log(i);
-}, 10, 1000).done(function() {
-    log("done");
-});
-*/
+		
 		
 		
 		

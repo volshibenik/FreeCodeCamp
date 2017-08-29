@@ -4,4 +4,22 @@
   height: 50px;
   border: 1px solid #147;
   margin: 10px;
+  background-color: #fff;
+  transition: .3s;
+}
+.cube-0 {
+  background-color: blue;
+}
+.cube-1 {
+  background-color: yellow;
+}
+.cube-2 {
+  background-color: red;
+}
+.cube-3 {
+  background-color: green;
+}
+.playing {
+  opacity: .25;
+  box-shadow: 5px 2px 15px;
 }
