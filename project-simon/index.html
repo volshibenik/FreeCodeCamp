@@ -6,24 +6,35 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<div class="cube cube-0"></div>
-	<div class="cube cube-1"></div>
-	<div class="cube cube-2"></div>
-	<div class="cube cube-3"></div>
+	<div class="simon-container">
+		<div class="cube cube-0 inactive"></div>
+		<div class="cube cube-1 inactive"></div>
+		<div class="cube cube-2 inactive"></div>
+		<div class="cube cube-3 inactive"></div>
+	</div>
+	<div class="tracker-container">
+		<p class="simon-tracker"></p>
+	</div>
+	<button class="start-btn" onclick="simonStart()">!</button>
 	<script>
-		const cubes = document.querySelectorAll('.cube');
-		var sequence = [1,2,0,3,1,1];
+		const cubes = document.querySelectorAll('.cube'),
+					startBtn = document.querySelector('.start-btn'),
+					tracker = document.querySelector('.simon-tracker'),
+					trackerContainer = document.querySelector('.tracker-container'),
+					sequenceMax = 20, 
+					///////////CSS classes vars
+					notClickable = 'inactive',  
+					playing = 'playing';
+		
+		var sequence = [1,2];
+		var clickN = -1;
+		var targetNode;
+		
 	
-		function simon_sequence(array) {
-			for(var i = 0; i < array.length; i++) {
-				
-				
-				
-			}
-		}
+		
 		
 		function removeTransition() {
-    	this.classList.remove('playing'); 
+			this.classList.remove(playing); 
     }
 		
 		cubes.forEach(function(cube){
@@ -35,24 +46,93 @@
 		});
 		
 		
-		var clickN = 0;  //not here
-		var targetNode;
+
 		
 		function playerClicks(){
+			clickN+=1;
+			targetNode = /[0-3]/.exec(this.className); //cube class must contain 0-3
 			
-			targetNode = /[0-9]/.exec(this.className);
+//			console.log(targetNode);
 			
 			if (targetNode != sequence[clickN]) {
+				
 				console.log('error');
-			} else {console.log('gut!');}
-			clickN+=1;
-			if (clickN > sequence.length) {
-				// push another and relaunch runIter
+				//playbadsound
+				simonRestart();
+				
+			} else {
+				
+				console.log('good!');
+				this.classList.add(playing);//maybe put outside-highlight in both
+				//playsound good
+				
+			}
+
+			
+			if (clickN >= sequence.length-1) {
+//				console.log('cli',clickN);
+				if (sequence.length === sequenceMax) {
+					
+					winning();
+				} else{
+					sequence.push(randomCube());
+					console.log(sequence);
+					simonRestart();
+				}
+				
 			}
 		}
 		
-		function randomCube(){
-			return math.floor(Math.random()*4);
+		function winning(){
+			
+			activateCubes(false);
+//			console.log(sequence);
+//			console.log('cli',clickN);
+			console.log('congratulations!');
+		}
+		
+		function updateScore(){
+			trackerContainer.classList.add('fade');
+			tracker.innerHTML = sequence.length;
+			setTimeout(function(){
+				trackerContainer.classList.remove('fade');
+			},1000)
+			
+			//put all in timeout also display none el.style etc also removeTransition()
+
+		}
+		
+		
+		function simonStart() {
+			sequence = [];
+			sequence.push(randomCube());
+			simonRestart();
+		}
+		
+		
+		function simonRestart() {
+			
+			clickN = -1;
+			activateCubes(false);  //block
+			updateScore();
+			
+			runIteration(function(j) {
+				play(sequence[j]);
+			}, sequence.length, 1000);
+			
+		}
+		
+		function activateCubes(bool) {
+
+			cubes.forEach(function(cube){
+				
+				bool? cube.classList.remove(notClickable) :
+							cube.classList.add(notClickable);
+			});
+		}
+		
+		function randomCube(){   
+			return Math.floor(Math.random()*4);
 		}
 		
 		//https://stackoverflow.com/questions/24293376/javascript-for-loop-with-timeout
@@ -60,24 +140,26 @@
 		function runIteration(fn, numTimes, delay) {
 			var cnt = 0;
 			function next() {
-				fn(cnt)
+				fn(cnt);
 				cnt++;
 				if (cnt < numTimes) {
 					setTimeout(next, delay);
-				} else console.log('fin!');
+				} else { 
+					console.log('end sequence!');
+					activateCubes(true); //unblock
+				}
 			}
 			// start first iteration
 			setTimeout(next, 1000);
-		}
-		
-		runIteration(function(j) {
-			play(sequence[j]);
-		}, sequence.length, 1000);
+		}		
 		
 		
 		function play(num) {
-			cubes[num].classList.add('playing');
+			if(num !== undefined)
+			cubes[num].classList.add(playing);
 		}
+		
+		
 		
 		window.addEventListener('keydown', function(e){
 			console.log(e.keyCode);
@@ -110,21 +192,6 @@
 			}, 1000);
 		}(0));
 		*/
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 		

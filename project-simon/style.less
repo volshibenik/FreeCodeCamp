@@ -4,7 +4,8 @@
 	border: 1px solid #147;
 	margin: 10px;
 	background-color: #fff;
-	transition: .3s;
+	cursor: pointer;
+	transition: .2s;
 }
 .cube-0 {background-color: blue;}
 .cube-1 {background-color: yellow;}
@@ -14,4 +15,13 @@
 .playing {
 	opacity: .25;
 	box-shadow: 5px 2px 15px;
+}
+.inactive {
+	pointer-events: none;
+}
+.tracker-container {
+	transition:  .2s;
+}
+.fade {
+	opacity: 0;
 }
