@@ -7,20 +7,31 @@
 </head>
 <body>
 	<div class="simon-container">
-		<div class="cube cube-0 inactive"></div>
-		<div class="cube cube-1 inactive"></div>
-		<div class="cube cube-2 inactive"></div>
-		<div class="cube cube-3 inactive"></div>
+		<div class="cube cube-0 inactive">
+			<audio class="cube-audio" src="https://s3.amazonaws.com/freecodecamp/simonSound1.mp3"></audio>
+		</div>
+		<div class="cube cube-1 inactive">
+			<audio class="cube-audio" src="https://s3.amazonaws.com/freecodecamp/simonSound2.mp3"></audio>
+		</div>
+		<div class="cube cube-2 inactive">
+			<audio class="cube-audio" src="https://s3.amazonaws.com/freecodecamp/simonSound3.mp3"></audio>
+		</div>
+		<div class="cube cube-3 inactive">
+			<audio class="cube-audio" src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"></audio>
+		</div>
 	</div>
 	<div class="tracker-container">
-		<p class="simon-tracker"></p>
+		<p class="simon-tracker">0</p>
 	</div>
-	<button class="start-btn" onclick="simonStart()">!</button>
+	<button class="start-btn" onclick="simonStart()">Start</button>
 	<script>
 		const cubes = document.querySelectorAll('.cube'),
+					audios = document.querySelectorAll('.cube-audio'),
 					startBtn = document.querySelector('.start-btn'),
 					tracker = document.querySelector('.simon-tracker'),
 					trackerContainer = document.querySelector('.tracker-container'),
+					
+					
 					sequenceMax = 20, 
 					///////////CSS classes vars
 					notClickable = 'inactive',  
@@ -64,7 +75,9 @@
 				
 				console.log('good!');
 				this.classList.add(playing);//maybe put outside-highlight in both
-				//playsound good
+				this.children[0].currentTime = 0;
+				this.children[0].play();
+
 				
 			}
 
@@ -92,11 +105,14 @@
 		}
 		
 		function updateScore(){
+			
 			trackerContainer.classList.add('fade');
+			trackerContainer.classList.remove('reveal');
 			tracker.innerHTML = sequence.length;
 			setTimeout(function(){
+				trackerContainer.classList.add('reveal');
 				trackerContainer.classList.remove('fade');
-			},1000)
+			},500)
 			
 			//put all in timeout also display none el.style etc also removeTransition()
 
@@ -157,6 +173,7 @@
 		function play(num) {
 			if(num !== undefined)
 			cubes[num].classList.add(playing);
+			cubes[num].children[0].play();
 		}
 		
 		
