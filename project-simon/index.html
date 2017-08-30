@@ -19,14 +19,19 @@
 		<div class="cube cube-3 inactive">
 			<audio class="cube-audio" src="https://s3.amazonaws.com/freecodecamp/simonSound4.mp3"></audio>
 		</div>
+		<audio class="error-audio" src="https://cdn.rawgit.com/volshibenik/FreeCodeCamp/master/project-simon/error.mp3"></audio>
 	</div>
-	<div class="tracker-container">
-		<p class="simon-tracker">0</p>
+	<div class="count-container">
+		<p>Current count: <span class="tracker-container"><span class="simon-tracker">0</span></span></p>
+	</div>
+	<div class="simon-display">
+			
 	</div>
 	<button class="start-btn" onclick="simonStart()">Start</button>
 	<script>
 		const cubes = document.querySelectorAll('.cube'),
 					audios = document.querySelectorAll('.cube-audio'),
+					errorSound = document.querySelector('.error-audio'),
 					startBtn = document.querySelector('.start-btn'),
 					tracker = document.querySelector('.simon-tracker'),
 					trackerContainer = document.querySelector('.tracker-container'),
@@ -68,8 +73,9 @@
 			if (targetNode != sequence[clickN]) {
 				
 				console.log('error');
-				//playbadsound
-				simonRestart();
+				errorSound.play();
+				
+				simonRestart() || simonStart();
 				
 			} else {
 				
@@ -102,6 +108,7 @@
 //			console.log(sequence);
 //			console.log('cli',clickN);
 			console.log('congratulations!');
+			document.querySelector('.simon-display').innerHTML = 'Congratulations!'
 		}
 		
 		function updateScore(){
